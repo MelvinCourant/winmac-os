@@ -1,0 +1,10 @@
+@use '../partials/functions';
+
+.desktop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: functions.rem(30);
+  width: 100%;
+  height: calc(100% - 77px);
+}

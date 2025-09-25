@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Paramètres",
+    "image": "settings",
+    "component": "Settings"
+  },
+  {
+    "name": "Shifumi Fight",
+    "image": "shifumi-fight",
+    "component": ""
+  }
+]

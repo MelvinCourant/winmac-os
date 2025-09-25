@@ -6,11 +6,16 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
+  color: var(--color);
 }
 
 html {
   display: flex;
   min-height: 100svh;
+  background-image: url('../../../assets/imgs/background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 
   body {
     display: flex;
@@ -43,12 +48,6 @@ html {
     .hidden-title {
       font-size: fonts.$hidden;
       position: absolute;
-    }
-
-    main {
-      position: relative;
-      min-height: 100svh;
-      width: 100%;
     }
   }
 }

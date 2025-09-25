@@ -1,0 +1,10 @@
+@use "../../partials/functions";
+
+.desktop-apps {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 100px);
+  grid-template-rows: repeat(auto-fill, 89px);
+  gap: functions.rem(30) functions.rem(20);
+  flex: 1;
+  padding: functions.rem(20);
+}
