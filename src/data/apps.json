@@ -1,11 +1,13 @@
 [
   {
-    "name": "Paramètres",
+    "name": "settings",
+    "title": "Paramètres",
     "image": "settings",
     "component": "Settings"
   },
   {
-    "name": "Shifumi Fight",
+    "name": "shifumi-fight",
+    "title": "Shifumi Fight",
     "image": "shifumi-fight",
     "link": "https://shifumi-fight.melvincourant.fr/",
     "component": ""

@@ -12,7 +12,7 @@ const props = defineProps({
 defineEmits(['actionClicked']);
 
 const AppComponent = defineAsyncComponent(
-  () => import(`../apps/${props.app.component}.vue`),
+  () => import(`../apps/${props.app.name}/${props.app.component}.vue`),
 );
 
 const actions = reactive([

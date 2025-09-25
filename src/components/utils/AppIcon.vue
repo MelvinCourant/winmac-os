@@ -17,14 +17,14 @@ function generateUrl(src) {
 <template>
   <button
     class="app-icon"
-    :title="`Ouvrir l'application ${app.name}`"
+    :title="`Ouvrir l'application ${app.title}`"
     @click="$emit('appIconClicked', app)"
   >
     <img
       class="app-icon__image"
       :src="generateUrl(app.image)"
-      :alt="`Icône de l'application ${app.name}`"
+      :alt="`Icône de l'application ${app.title}`"
     />
-    <h3 class="app-icon__name">{{ app.name }}</h3>
+    <h3 class="app-icon__name">{{ app.title }}</h3>
   </button>
 </template>
