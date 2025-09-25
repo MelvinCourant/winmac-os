@@ -8,12 +8,13 @@ defineProps({
     required: true,
   },
 });
+defineEmits(['appIconClicked']);
 </script>
 
 <template>
   <ul class="desktop-apps">
     <li v-for="app in apps" :key="app.component">
-      <AppIcon :app="app" />
+      <AppIcon :app="app" @appIconClicked="$emit('appIconClicked', $event)" />
     </li>
   </ul>
 </template>
