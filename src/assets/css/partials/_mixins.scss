@@ -1,0 +1,9 @@
+@mixin resetButton($border, $background) {
+  cursor: pointer;
+  border: $border;
+  background: $background;
+
+  &:focus {
+    outline: none;
+  }
+}

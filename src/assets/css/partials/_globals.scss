@@ -1,0 +1,54 @@
+@use 'fonts';
+@use 'variables';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+html {
+  display: flex;
+  min-height: 100svh;
+
+  body {
+    display: flex;
+    flex: 1;
+    min-height: 100svh;
+
+    #app {
+      display: flex;
+      flex: 1;
+    }
+
+    video,
+    img,
+    svg,
+    object {
+      max-width: 100%;
+      height: auto;
+      vertical-align: middle;
+    }
+
+    li {
+      list-style: none;
+      text-decoration: none;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .hidden-title {
+      font-size: fonts.$hidden;
+      position: absolute;
+    }
+
+    main {
+      position: relative;
+      min-height: 100svh;
+      width: 100%;
+    }
+  }
+}
