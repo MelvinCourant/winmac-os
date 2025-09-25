@@ -1,8 +1,15 @@
 .window-actions {
   display: flex;
+  justify-content: flex-end;
   position: absolute;
   top: 0;
   right: 0;
-  border-radius: 0 6px;
-  overflow: hidden;
+  width: 100%;
+  cursor: grab;
+
+  .window-button {
+    &:first-child {
+      border-radius: 0 0 0 6px;
+    }
+  }
 }

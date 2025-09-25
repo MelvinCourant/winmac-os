@@ -8,11 +8,11 @@ defineProps({
     required: true,
   },
 });
-defineEmits(['actionClicked']);
+defineEmits(['actionClicked', 'grabbing', 'cursorMove', 'stopGrabbing']);
 </script>
 
 <template>
-  <div class="window-actions">
+  <div class="window-actions" @mousedown="$emit('grabbing', $event)">
     <WindowButton
       v-for="action in actions"
       :key="action.name"

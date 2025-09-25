@@ -1,6 +1,6 @@
 <script setup>
 import '../../assets/css/components/window/_window.scss';
-import { defineAsyncComponent, reactive } from 'vue';
+import { defineAsyncComponent, reactive, ref } from 'vue';
 import WindowActions from './WindowActions.vue';
 
 const props = defineProps({
@@ -77,6 +77,16 @@ const actions = reactive([
     isActive: true,
   },
 ]);
+const grabbing = ref(false);
+const positions = reactive({
+  top: null,
+  left: null,
+});
+const cursorPositionInWindow = reactive({
+  x: null,
+  y: null,
+});
+const hasTransform = ref(true);
 
 function handleActions(actionSelected) {
   actions.forEach((action) => {
@@ -93,16 +103,60 @@ function handleActions(actionSelected) {
     }
   });
 }
+
+function grabWindow(e) {
+  const maximiseAction = actions.find((action) => action.name === 'maximize');
+
+  if (!maximiseAction.isActive || e.target.closest('.window-button')) return;
+
+  grabbing.value = true;
+  hasTransform.value = false;
+
+  const window = e.target.closest('.window');
+
+  cursorPositionInWindow.x = e.clientX - window.getBoundingClientRect().left;
+  cursorPositionInWindow.y = e.clientY - window.getBoundingClientRect().top;
+  positions.top = e.clientY - cursorPositionInWindow.y;
+  positions.left = e.clientX - cursorPositionInWindow.x;
+}
+
+function moveWindow(e) {
+  if (!grabbing.value) return;
+
+  positions.top = e.clientY - cursorPositionInWindow.y;
+  positions.left = e.clientX - cursorPositionInWindow.x;
+}
+
+function stopGrabbing() {
+  grabbing.value = false;
+
+  window.removeEventListener('mousemove', moveWindow);
+  window.removeEventListener('mouseup', stopGrabbing);
+}
+
+window.addEventListener('mousemove', moveWindow);
+window.addEventListener('mouseup', stopGrabbing);
 </script>
 
 <template>
-  <div class="window">
+  <div
+    class="window"
+    :style="{
+      top: positions.top ? `${positions.top}px` : '',
+      left: positions.top ? `${positions.left}px` : '',
+      transform: !hasTransform ? 'none' : '',
+    }"
+  >
     <WindowActions
       :actions="actions"
       @actionClicked="
         handleActions($event);
         $emit('actionClicked', { action: $event, app });
       "
+      @grabbing="grabWindow"
+      @cursorMove="moveWindow"
+      @stopGrabbing="stopGrabbing"
+      :style="{ cursor: grabbing ? 'grabbing' : '' }"
     />
     <AppComponent v-if="app.component" :app="app" />
   </div>
