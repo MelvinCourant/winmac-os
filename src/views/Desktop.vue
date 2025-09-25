@@ -21,6 +21,16 @@ function handleApp(app) {
     windows.value.push(app);
   }
 }
+
+function handleCloseApp({ action, app }) {
+  if (action.name === 'close') {
+    windows.value.forEach((window) => {
+      if (window.name === app.name) {
+        windows.value.splice(windows.value.indexOf(window), 1);
+      }
+    });
+  }
+}
 </script>
 
 <template>
@@ -28,6 +38,6 @@ function handleApp(app) {
     <h1 class="hidden-title">Winmac OS</h1>
     <Header />
     <DesktopApps :apps="AppsJson" @appIconClicked="handleApp($event)" />
-    <Windows :windows="windows" />
+    <Windows :windows="windows" @actionClicked="handleCloseApp($event)" />
   </main>
 </template>

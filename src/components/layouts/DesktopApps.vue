@@ -12,9 +12,12 @@ defineEmits(['appIconClicked']);
 </script>
 
 <template>
-  <ul class="desktop-apps">
-    <li v-for="app in apps" :key="app.component">
-      <AppIcon :app="app" @appIconClicked="$emit('appIconClicked', $event)" />
-    </li>
-  </ul>
+  <div class="desktop-apps">
+    <AppIcon
+      v-for="app in apps"
+      :key="app.component"
+      :app="app"
+      @appIconClicked="$emit('appIconClicked', $event)"
+    />
+  </div>
 </template>

@@ -1,0 +1,21 @@
+@use "../../partials/mixins";
+
+.window-button {
+  @include mixins.resetButton(var(--background), none);
+  display: flex;
+  padding: 3px 7.5px;
+  justify-content: center;
+  align-items: center;
+
+  &--normal {
+    &:hover {
+      background: var(--hover);
+    }
+  }
+
+  &--danger {
+    &:hover {
+      background: var(--red);
+    }
+  }
+}

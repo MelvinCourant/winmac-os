@@ -1,15 +1,18 @@
 $global-colors: (
-  'white': #D9DBDE
+  'white': #D9DBDE,
+  'red': #BA0000
 );
 
 $dark-theme-colors: (
   'color': #D9DBDE,
-  'background': #202225
+  'background': #202225,
+  'hover': #363A3F
 );
 
 $light-theme-colors: (
   'color': #202225,
-  'background': #D9DBDE
+  'background': #D9DBDE,
+  'hover': #C0C4C9
 );
 
 :root {

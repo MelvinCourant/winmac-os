@@ -1,5 +1,5 @@
 <script setup>
-import Window from '../utils/Window.vue';
+import Window from '../window/Window.vue';
 
 defineProps({
   windows: {
@@ -7,10 +7,15 @@ defineProps({
     required: true,
   },
 });
+defineEmits(['actionClicked']);
 </script>
 
 <template>
   <div class="windows">
-    <Window v-for="window in windows" :app="window" />
+    <Window
+      v-for="window in windows"
+      :app="window"
+      @actionClicked="$emit('actionClicked', $event)"
+    />
   </div>
 </template>
