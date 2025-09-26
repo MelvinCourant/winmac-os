@@ -1,0 +1,9 @@
+@use "../../../partials/functions";
+@use "../../../partials/mixins";
+
+.settings-back {
+  position: absolute;
+  top: functions.rem(25);
+  left: functions.rem(30);
+  @include mixins.resetButton(none, none);
+}

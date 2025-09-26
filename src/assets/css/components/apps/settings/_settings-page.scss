@@ -1,0 +1,58 @@
+@use "../../../partials/functions";
+
+.settings-page {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: functions.rem(35) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: functions.rem(60);
+  overflow-y: auto;
+  transition: transform 0.4s ease;
+  background: var(--background);
+
+  &__hidden {
+    transform: translateX(100%);
+  }
+
+  &__title {
+    font-size: functions.rem(36);
+    font-weight: 700;
+    font-style: normal;
+    text-align: center;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: functions.rem(45);
+    width: 550px;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: functions.rem(20);
+  }
+
+  .select {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__title {
+    &-big {
+      font-size: functions.rem(24);
+      font-weight: 600;
+    }
+
+    &-small {
+      font-size: functions.rem(16);
+    }
+  }
+}
