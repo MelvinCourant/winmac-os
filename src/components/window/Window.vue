@@ -129,9 +129,6 @@ function moveWindow(e) {
 
 function stopGrabbing() {
   grabbing.value = false;
-
-  window.removeEventListener('mousemove', moveWindow);
-  window.removeEventListener('mouseup', stopGrabbing);
 }
 
 window.addEventListener('mousemove', moveWindow);
