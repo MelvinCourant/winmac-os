@@ -128,6 +128,7 @@ const batteryStatus = [
       '</svg>',
   },
 ];
+const pingRefreshTime = ref(10000);
 
 setInterval(updateDateTime, 1000);
 navigator.getBattery().then((battery) => {
@@ -137,6 +138,8 @@ navigator.getBattery().then((battery) => {
     updateBatteryIcon(battery);
   });
 });
+updatePing();
+setInterval(updatePing, pingRefreshTime.value);
 
 function updateBatteryIcon(battery) {
   let iconFind = false;
@@ -215,6 +218,35 @@ function updateDateTime() {
       subitem.value = year;
     }
   });
+}
+
+function updatePing() {
+  const serverRequest = new XMLHttpRequest();
+  const startTime = performance.now();
+
+  serverRequest.open('GET', window.location.href, true);
+
+  serverRequest.onload = function () {
+    const ping = header
+      .find((group) => group.side === 'right')
+      .items.find((item) => item.name === 'network');
+    const endTime = performance.now();
+    const responseTime = Math.round(endTime - startTime);
+
+    if (serverRequest.status === 200) {
+      ping.value = `${responseTime}ms`;
+
+      if (responseTime < 50) {
+        ping.color = 'green';
+      } else if (responseTime >= 50 && responseTime < 100) {
+        ping.color = 'yellow';
+      } else if (responseTime >= 100) {
+        ping.color = 'red';
+      }
+    }
+  };
+
+  serverRequest.send();
 }
 
 function handleApp(app) {
