@@ -92,6 +92,73 @@ const header = reactive([
   },
 ]);
 
+setInterval(updateDateTime, 1000);
+
+function updateDateTime() {
+  const headerLeft = header.find((group) => group.side === 'left');
+  const time = headerLeft.items.find((item) => item.name === 'time');
+  const date = headerLeft.items.find((item) => item.name === 'date');
+
+  let seconds = time.subitems.find(
+    (subitem) => subitem.name === 'seconds',
+  ).value;
+  let minutes = time.subitems.find(
+    (subitem) => subitem.name === 'minutes',
+  ).value;
+  let hours = time.subitems.find((subitem) => subitem.name === 'hours').value;
+  let day = date.subitems.find((subitem) => subitem.name === 'day').value;
+  let month = date.subitems.find((subitem) => subitem.name === 'month').value;
+  let year = date.subitems.find((subitem) => subitem.name === 'year').value;
+
+  if (seconds === 59) {
+    seconds = 0;
+
+    if (minutes === 59) {
+      minutes = 0;
+
+      if (hours === 23) {
+        hours = 0;
+
+        day = new Date().getDate();
+
+        if (day === 1) {
+          month = new Date().getMonth() + 1;
+
+          if (month === 1) {
+            year = new Date().getFullYear();
+          }
+        }
+      } else {
+        hours += 1;
+      }
+    } else {
+      minutes += 1;
+    }
+  } else {
+    seconds += 1;
+  }
+
+  time.subitems.forEach((subitem) => {
+    if (subitem.name === 'seconds') {
+      subitem.value = seconds;
+    } else if (subitem.name === 'minutes') {
+      subitem.value = minutes;
+    } else {
+      subitem.value = hours;
+    }
+  });
+
+  date.subitems.forEach((subitem) => {
+    if (subitem.name === 'day') {
+      subitem.value = day;
+    } else if (subitem.name === 'month') {
+      subitem.value = month;
+    } else if (subitem.name === 'year') {
+      subitem.value = year;
+    }
+  });
+}
+
 function handleApp(app) {
   let appIsOpened = false;
 
