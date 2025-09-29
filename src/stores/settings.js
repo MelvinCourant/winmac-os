@@ -11,6 +11,9 @@ export const useSettingsStore = defineStore('settings', () => {
   }
 
   const settings = ref({
+    battery: {
+      active: true,
+    },
     theme: 'system',
     wallpaper: {
       image: 'background',

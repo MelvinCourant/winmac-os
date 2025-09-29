@@ -5,11 +5,6 @@ import Select from '../../../inputs/Select.vue';
 import { useSettingsStore } from '../../../../stores/settings.js';
 import Input from '../../../inputs/Input.vue';
 
-const settingsStore = useSettingsStore();
-const { settings, updateSettings } = settingsStore;
-
-const imageDimensions = ref({ width: 1920, height: 1080 });
-
 defineProps({
   display: {
     type: Boolean,
@@ -18,6 +13,9 @@ defineProps({
 });
 defineEmits(['back']);
 
+const settingsStore = useSettingsStore();
+const { settings, updateSettings } = settingsStore;
+const imageDimensions = ref({ width: 1920, height: 1080 });
 const themeSelectLabel = {
   text: "Thème de l'OS",
   attributes: {

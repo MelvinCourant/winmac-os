@@ -4,10 +4,13 @@ import Header from '../components/layouts/Header.vue';
 import AppsJson from '../data/apps.json';
 import DesktopApps from '../components/layouts/DesktopApps.vue';
 import Windows from '../components/layouts/Windows.vue';
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
+import { useSettingsStore } from '../stores/settings.js';
 
+const settingsStore = useSettingsStore();
+const { settings } = settingsStore;
 const windows = ref([]);
-const header = reactive([
+const header = computed(() => [
   {
     side: 'left',
     items: [
@@ -79,7 +82,7 @@ const header = reactive([
           '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="10" viewBox="0 0 22 10" fill="none">\n' +
           '  <path d="M3.72953 10C3.457 10 3.23184 9.90566 3.05406 9.71698C2.87545 9.5283 2.78614 9.29769 2.78614 9.02516V7.04402H0.77356V2.92453H2.78614V0.943396C2.78614 0.691824 2.87545 0.471699 3.05406 0.283019C3.23184 0.0943401 3.457 0 3.72953 0H21.0566C21.3291 0 21.5547 0.0943401 21.7333 0.283019C21.9111 0.471699 22 0.691824 22 0.943396V9.02516C22 9.31866 21.9111 9.5543 21.7333 9.73207C21.5547 9.91069 21.3291 10 21.0566 10H3.72953Z" fill="var(--color)"/>\n' +
           '</svg>',
-        active: true,
+        active: settings.battery.active,
       },
       {
         name: 'network',

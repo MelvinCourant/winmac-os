@@ -21,14 +21,14 @@ defineEmits(['change', 'click']);
       {{ attributes.text }}
       <input
         v-bind="attributes"
-        :class="`input input--${attributes.type}`"
+        :class="`input--${attributes.type}`"
         @change="$emit('change', $event.target)"
       />
     </div>
     <input
       v-else
       v-bind="attributes"
-      :class="`input input--${attributes.type}`"
+      :class="`input--${attributes.type}`"
       @change="$emit('change', $event.target)"
       @click="$emit('click')"
     />
