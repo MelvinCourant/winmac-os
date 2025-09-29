@@ -31,14 +31,10 @@
       font-weight: 400;
 
       &:hover {
-        background: var(--hover);
+        background: var(--input-hover);
       }
     }
   }
-}
-
-@media screen {
-
 }
 
 @media (prefers-color-scheme: dark) {

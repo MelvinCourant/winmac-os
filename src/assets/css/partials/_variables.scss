@@ -10,13 +10,15 @@ $dark-theme-colors: (
   'background': #202225,
   'hover': #363A3F,
   'input': #34373C,
+  'input-hover': #474B52,
 );
 
 $light-theme-colors: (
   'color': #202225,
   'background': #D9DBDE,
   'hover': #C0C4C9,
-  'input': #C3C6CB
+  'input': #C3C6CB,
+  'input-hover': #878D97,
 );
 
 :root {

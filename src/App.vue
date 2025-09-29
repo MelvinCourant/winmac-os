@@ -11,11 +11,21 @@ if (settings.theme === 'dark' || settings.theme === 'light') {
   document.querySelector('#app').classList.add(settings.theme);
 }
 
+if (settings.background !== 'background') {
+  document.body.style.backgroundImage = `url(${settings.background})`;
+}
+
 watch(settings, (value) => {
   if (value.theme === 'system') {
     document.querySelector('#app').classList = '';
   } else if (value.theme === 'dark' || value.theme === 'light') {
     document.querySelector('#app').classList = value.theme;
+  }
+
+  if (value.background !== 'background') {
+    document.body.style.backgroundImage = `url(${value.background})`;
+  } else if (value.background === 'background') {
+    document.body.style = '';
   }
 });
 </script>

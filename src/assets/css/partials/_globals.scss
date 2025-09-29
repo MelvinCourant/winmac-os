@@ -12,15 +12,15 @@
 html {
   display: flex;
   min-height: 100svh;
-  background-image: url('../../../assets/imgs/background.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
 
   body {
     display: flex;
     flex: 1;
     min-height: 100svh;
+    background-image: url('../../../assets/imgs/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
 
     #app {
       display: flex;

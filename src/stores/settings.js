@@ -12,6 +12,7 @@ export const useSettingsStore = defineStore('settings', () => {
 
   const settings = ref({
     theme: 'system',
+    background: 'background',
   });
 
   if (localStorageSettings) {
