@@ -148,26 +148,86 @@ const togglesTime = computed(() => ({
     },
   ],
 }));
+
+function updateSubitemSettings(item, name, value) {
+  let subitems;
+
+  if (item === 'date') {
+    subitems = settings.date.subitems;
+
+    subitems.forEach((subitem) => {
+      if (subitem.name === name) {
+        subitem.active = value;
+      }
+    });
+
+    updateSettings({
+      date: {
+        active: settings.date.active,
+        subitems: subitems,
+      },
+    });
+  } else {
+    subitems = settings.time.subitems;
+
+    subitems.forEach((subitem) => {
+      if (subitem.name === name) {
+        subitem.active = value;
+      }
+    });
+
+    updateSettings({
+      time: {
+        active: settings.time.active,
+        subitems: subitems,
+      },
+    });
+  }
+}
 </script>
 
 <template>
   <SettingsPage title="Date et heure" :display="display" @back="$emit('back')">
     <form class="settings-page__group">
-      <Toggle :label="togglesDate.label" :attributes="togglesDate.attributes" />
+      <Toggle
+        :label="togglesDate.label"
+        :attributes="togglesDate.attributes"
+        @change="
+          updateSettings({
+            date: {
+              active: $event,
+              subitems: [...settings.date.subitems],
+            },
+          })
+        "
+      />
       <Toggle
         v-for="subitem in togglesDate.subitems"
         :key="subitem.attributes.id"
         :label="subitem.label"
         :attributes="subitem.attributes"
+        @change="updateSubitemSettings('date', subitem.attributes.id, $event)"
       />
     </form>
     <form class="settings-page__group">
-      <Toggle :label="togglesTime.label" :attributes="togglesTime.attributes" />
+      <Toggle
+        :label="togglesTime.label"
+        :attributes="togglesTime.attributes"
+        @change="
+          updateSettings({
+            time: {
+              active: $event,
+              subitems: [...settings.time.subitems],
+            },
+          })
+        "
+      />
       <Toggle
         v-for="subitem in togglesTime.subitems"
         :key="subitem.attributes.id"
         :label="subitem.label"
         :attributes="subitem.attributes"
+        @change="updateSubitemSettings('time', subitem.attributes.id, $event)"
       />
     </form>
   </SettingsPage>

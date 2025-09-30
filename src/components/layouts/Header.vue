@@ -52,9 +52,9 @@ defineEmits(['click']);
                   >{{ subitem.value
                   }}<span
                     v-if="
-                      index <
-                      item.subitems.filter((subitem) => subitem.active).length -
-                        1
+                      item.subitems
+                        .slice(index + 1)
+                        .some((s) => s.active)
                     "
                     class="header__subitem-divider"
                   >

@@ -4,6 +4,7 @@
 
   &--disabled {
     color: var(--hover);
+    transition: color .2s ease-in-out;
 
     .toggle {
       &__switch {
