@@ -4,69 +4,85 @@ import Header from '../components/layouts/Header.vue';
 import AppsJson from '../data/apps.json';
 import DesktopApps from '../components/layouts/DesktopApps.vue';
 import Windows from '../components/layouts/Windows.vue';
-import { computed, nextTick, provide, ref } from 'vue';
+import { computed, nextTick, provide, ref, watch } from 'vue';
 import { useSettingsStore } from '../stores/settings.js';
 
 const settingsStore = useSettingsStore();
 const { settings } = settingsStore;
 const windows = ref([]);
+
+// Valeurs réactives pour date, time et network
+const currentDay = ref(new Date().getDate());
+const currentMonth = ref(new Date().getMonth() + 1);
+const currentYear = ref(new Date().getFullYear());
+const currentHours = ref(new Date().getHours());
+const currentMinutes = ref(new Date().getMinutes());
+const currentSeconds = ref(new Date().getSeconds());
+const batteryIcon = ref(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="10" viewBox="0 0 22 10" fill="none">\n' +
+    '  <path d="M3.72953 10C3.457 10 3.23184 9.90566 3.05406 9.71698C2.87545 9.5283 2.78614 9.29769 2.78614 9.02516V7.04402H0.77356V2.92453H2.78614V0.943396C2.78614 0.691824 2.87545 0.471699 3.05406 0.283019C3.23184 0.0943401 3.457 0 3.72953 0H21.0566C21.3291 0 21.5547 0.0943401 21.7333 0.283019C21.9111 0.471699 22 0.691824 22 0.943396V9.02516C22 9.31866 21.9111 9.5543 21.7333 9.73207C21.5547 9.91069 21.3291 10 21.0566 10H3.72953Z" fill="var(--color)"/>\n' +
+    '</svg>',
+);
+const networkValue = ref('0ms');
+const networkColor = ref('green');
+
 const header = computed(() => [
   {
     side: 'left',
     items: [
       {
         name: 'date',
-        active: settings.date.active || !settings.date,
+        displayIcon: settings.date.displayIcon || !settings.date,
         subitems: [
           {
             name: 'day',
-            value: new Date().getDate(),
-            active:
+            value: currentDay.value,
+            displayIcon:
               settings.date.subitems.find((subitem) => subitem.name === 'day')
-                .active || !settings.date,
+                .displayIcon || !settings.date,
           },
           {
             name: 'month',
-            value: new Date().getMonth() + 1,
-            active:
+            value: currentMonth.value,
+            displayIcon:
               settings.date.subitems.find((subitem) => subitem.name === 'month')
-                .active || !settings.date,
+                .displayIcon || !settings.date,
           },
           {
             name: 'year',
-            value: new Date().getFullYear(),
-            active:
+            value: currentYear.value,
+            displayIcon:
               settings.date.subitems.find((subitem) => subitem.name === 'year')
-                .active || !settings.date,
+                .displayIcon || !settings.date,
           },
         ],
       },
       {
         name: 'time',
-        active: settings.time.active || !settings.time,
+        displayIcon: settings.time.displayIcon || !settings.time,
         subitems: [
           {
             name: 'hours',
-            value: new Date().getHours(),
-            active:
+            value: currentHours.value,
+            displayIcon:
               settings.time.subitems.find((subitem) => subitem.name === 'hours')
-                .active || !settings.time,
+                .displayIcon || !settings.time,
           },
           {
             name: 'minutes',
-            value: new Date().getMinutes(),
-            active:
+            value: currentMinutes.value,
+            displayIcon:
               settings.time.subitems.find(
                 (subitem) => subitem.name === 'minutes',
-              ).active || !settings.time,
+              ).displayIcon || !settings.time,
           },
           {
             name: 'seconds',
-            value: new Date().getSeconds(),
-            active:
+            value: currentSeconds.value,
+            displayIcon:
               settings.time.subitems.find(
                 (subitem) => subitem.name === 'seconds',
-              ).active || !settings.time,
+              ).displayIcon || !settings.time,
           },
         ],
       },
@@ -88,21 +104,18 @@ const header = computed(() => [
           '    </clipPath>\n' +
           '  </defs>\n' +
           '</svg>',
-        active: true,
+        displayIcon: settings.vibration.displayIcon || !settings.vibration,
       },
       {
         name: 'battery',
-        icon:
-          '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="10" viewBox="0 0 22 10" fill="none">\n' +
-          '  <path d="M3.72953 10C3.457 10 3.23184 9.90566 3.05406 9.71698C2.87545 9.5283 2.78614 9.29769 2.78614 9.02516V7.04402H0.77356V2.92453H2.78614V0.943396C2.78614 0.691824 2.87545 0.471699 3.05406 0.283019C3.23184 0.0943401 3.457 0 3.72953 0H21.0566C21.3291 0 21.5547 0.0943401 21.7333 0.283019C21.9111 0.471699 22 0.691824 22 0.943396V9.02516C22 9.31866 21.9111 9.5543 21.7333 9.73207C21.5547 9.91069 21.3291 10 21.0566 10H3.72953Z" fill="var(--color)"/>\n' +
-          '</svg>',
-        active: settings.battery.active || !settings.battery,
+        icon: batteryIcon.value,
+        displayIcon: settings.battery.displayIcon || !settings.battery,
       },
       {
         name: 'network',
-        value: '0ms',
-        color: 'green',
-        active: true,
+        value: networkValue.value,
+        color: networkColor.value,
+        displayIcon: settings.network.displayIcon || !settings.network,
       },
     ],
   },
@@ -144,7 +157,8 @@ const batteryStatus = [
       '</svg>',
   },
 ];
-const pingRefreshTime = ref(10000);
+const pingRefreshTime = ref(settings.network.refreshTime * 1000 || 10000);
+const pingIntervalId = ref(null);
 const settingsPageToDisplayed = ref(null);
 const mountedResolvers = ref({});
 
@@ -156,6 +170,21 @@ provide('onAppMounted', (appName) => {
   }
 });
 
+// Watch pour mettre à jour le ping interval quand le refreshTime change
+watch(
+  () => settings.network.refreshTime,
+  (newRefreshTime) => {
+    pingRefreshTime.value = newRefreshTime * 1000 || 10000;
+
+    if (pingIntervalId.value) {
+      clearInterval(pingIntervalId.value);
+    }
+
+    updatePing();
+    pingIntervalId.value = setInterval(updatePing, pingRefreshTime.value);
+  },
+);
+
 setInterval(updateDateTime, 1000);
 navigator.getBattery().then((battery) => {
   updateBatteryIcon(battery);
@@ -165,85 +194,47 @@ navigator.getBattery().then((battery) => {
   });
 });
 updatePing();
-setInterval(updatePing, pingRefreshTime.value);
+pingIntervalId.value = setInterval(updatePing, pingRefreshTime.value);
 
 function updateBatteryIcon(battery) {
   let iconFind = false;
-  const headerBattery = header.value
-    .find((group) => group.side === 'right')
-    .items.find((item) => item.name === 'battery');
 
   batteryStatus.forEach((status) => {
     if (!iconFind && battery.level <= status.level) {
-      headerBattery.icon = status.icon;
+      batteryIcon.value = status.icon;
       iconFind = true;
     }
   });
 }
 
 function updateDateTime() {
-  const headerLeft = header.value.find((group) => group.side === 'left');
-  const time = headerLeft.items.find((item) => item.name === 'time');
-  const date = headerLeft.items.find((item) => item.name === 'date');
+  if (currentSeconds.value === 59) {
+    currentSeconds.value = 0;
 
-  let seconds = time.subitems.find(
-    (subitem) => subitem.name === 'seconds',
-  ).value;
-  let minutes = time.subitems.find(
-    (subitem) => subitem.name === 'minutes',
-  ).value;
-  let hours = time.subitems.find((subitem) => subitem.name === 'hours').value;
-  let day = date.subitems.find((subitem) => subitem.name === 'day').value;
-  let month = date.subitems.find((subitem) => subitem.name === 'month').value;
-  let year = date.subitems.find((subitem) => subitem.name === 'year').value;
+    if (currentMinutes.value === 59) {
+      currentMinutes.value = 0;
 
-  if (seconds === 59) {
-    seconds = 0;
+      if (currentHours.value === 23) {
+        currentHours.value = 0;
 
-    if (minutes === 59) {
-      minutes = 0;
+        currentDay.value = new Date().getDate();
 
-      if (hours === 23) {
-        hours = 0;
+        if (currentDay.value === 1) {
+          currentMonth.value = new Date().getMonth() + 1;
 
-        day = new Date().getDate();
-
-        if (day === 1) {
-          month = new Date().getMonth() + 1;
-
-          if (month === 1) {
-            year = new Date().getFullYear();
+          if (currentMonth.value === 1) {
+            currentYear.value = new Date().getFullYear();
           }
         }
       } else {
-        hours += 1;
+        currentHours.value += 1;
       }
     } else {
-      minutes += 1;
+      currentMinutes.value += 1;
     }
   } else {
-    seconds += 1;
+    currentSeconds.value += 1;
   }
-
-  time.subitems.forEach((subitem) => {
-    if (subitem.name === 'seconds') {
-      subitem.value = seconds;
-    } else if (subitem.name === 'minutes') {
-      subitem.value = minutes;
-    } else {
-      subitem.value = hours;
-    }
-  });
-
-  date.subitems.forEach((subitem) => {
-    if (subitem.name === 'day') {
-      subitem.value = day;
-    } else if (subitem.name === 'month') {
-      subitem.value = month;
-    } else if (subitem.name === 'year') {
-      subitem.value = year;
-    }
-  });
 }
 
 function updatePing() {
@@ -253,21 +244,18 @@ function updatePing() {
   serverRequest.open('GET', window.location.href, true);
 
   serverRequest.onload = function () {
-    const ping = header.value
-      .find((group) => group.side === 'right')
-      .items.find((item) => item.name === 'network');
     const endTime = performance.now();
     const responseTime = Math.round(endTime - startTime);
 
     if (serverRequest.status === 200) {
-      ping.value = `${responseTime}ms`;
+      networkValue.value = `${responseTime}ms`;
 
       if (responseTime < 50) {
-        ping.color = 'green';
+        networkColor.value = 'green';
       } else if (responseTime >= 50 && responseTime < 100) {
-        ping.color = 'yellow';
+        networkColor.value = 'yellow';
       } else if (responseTime >= 100) {
-        ping.color = 'red';
+        networkColor.value = 'red';
       }
     }
   };

@@ -21,16 +21,16 @@ defineEmits(['click']);
           (group.side === 'right' &&
             group.items.some(
               (item) =>
-                item.active &&
-                (!item.subitems || item.subitems.some((s) => s.active)),
+                item.displayIcon &&
+                (!item.subitems || item.subitems.some((s) => s.displayIcon)),
             ))
         "
       >
         <template v-for="item in group.items">
           <div
             v-if="
-              item.active &&
-              (!item.subitems || item.subitems.some((s) => s.active))
+              item.displayIcon &&
+              (!item.subitems || item.subitems.some((s) => s.displayIcon))
             "
             class="header__item"
           >
@@ -47,14 +47,12 @@ defineEmits(['click']);
               "
             >
               <template v-for="(subitem, index) in item.subitems">
-                <p v-if="subitem.active">
+                <p v-if="subitem.displayIcon">
                   <template v-if="subitem.value < 10">0</template
                   >{{ subitem.value
                   }}<span
                     v-if="
-                      item.subitems
-                        .slice(index + 1)
-                        .some((s) => s.active)
+                      item.subitems.slice(index + 1).some((s) => s.displayIcon)
                     "
                     class="header__subitem-divider"
                   >

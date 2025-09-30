@@ -24,7 +24,7 @@ const toggleDisplayLabel = {
 const toggleDisplayAttributes = computed(() => ({
   id: 'battery',
   name: 'battery',
-  checked: settings.battery.active || !settings.battery,
+  checked: settings.battery.displayIcon || !settings.battery,
 }));
 </script>
 
@@ -37,7 +37,7 @@ const toggleDisplayAttributes = computed(() => ({
         @change="
           updateSettings({
             battery: {
-              active: $event,
+              displayIcon: $event,
             },
           })
         "

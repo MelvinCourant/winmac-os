@@ -25,7 +25,7 @@ const togglesDate = computed(() => ({
   attributes: {
     id: 'date',
     name: 'date',
-    checked: settings.date.active || !settings.date,
+    checked: settings.date.displayIcon || !settings.date,
   },
   subitems: [
     {
@@ -41,8 +41,8 @@ const togglesDate = computed(() => ({
         name: 'day',
         checked:
           settings.date.subitems.find((subitem) => subitem.name === 'day')
-            .active || !settings.date,
-        disabled: !settings.date.active,
+            .displayIcon || !settings.date,
+        disabled: !settings.date.displayIcon,
       },
     },
     {
@@ -58,8 +58,8 @@ const togglesDate = computed(() => ({
         name: 'month',
         checked:
           settings.date.subitems.find((subitem) => subitem.name === 'month')
-            .active || !settings.date,
-        disabled: !settings.date.active,
+            .displayIcon || !settings.date,
+        disabled: !settings.date.displayIcon,
       },
     },
     {
@@ -75,8 +75,8 @@ const togglesDate = computed(() => ({
         name: 'year',
         checked:
           settings.date.subitems.find((subitem) => subitem.name === 'year')
-            .active || !settings.date,
-        disabled: !settings.date.active,
+            .displayIcon || !settings.date,
+        disabled: !settings.date.displayIcon,
       },
     },
   ],
@@ -92,7 +92,7 @@ const togglesTime = computed(() => ({
   attributes: {
     id: 'time',
     name: 'time',
-    checked: settings.time.active || !settings.time,
+    checked: settings.time.displayIcon || !settings.time,
   },
   subitems: [
     {
@@ -108,8 +108,8 @@ const togglesTime = computed(() => ({
         name: 'hours',
         checked:
           settings.time.subitems.find((subitem) => subitem.name === 'hours')
-            .active || !settings.time,
-        disabled: !settings.time.active,
+            .displayIcon || !settings.time,
+        disabled: !settings.time.displayIcon,
       },
     },
     {
@@ -125,8 +125,8 @@ const togglesTime = computed(() => ({
         name: 'minutes',
         checked:
           settings.time.subitems.find((subitem) => subitem.name === 'minutes')
-            .active || !settings.time,
-        disabled: !settings.time.active,
+            .displayIcon || !settings.time,
+        disabled: !settings.time.displayIcon,
       },
     },
     {
@@ -142,8 +142,8 @@ const togglesTime = computed(() => ({
         name: 'seconds',
         checked:
           settings.time.subitems.find((subitem) => subitem.name === 'seconds')
-            .active || !settings.time,
-        disabled: !settings.time.active,
+            .displayIcon || !settings.time,
+        disabled: !settings.time.displayIcon,
       },
     },
   ],
@@ -157,13 +157,13 @@ function updateSubitemSettings(item, name, value) {
 
     subitems.forEach((subitem) => {
       if (subitem.name === name) {
-        subitem.active = value;
+        subitem.displayIcon = value;
       }
     });
 
     updateSettings({
       date: {
-        active: settings.date.active,
+        displayIcon: settings.date.displayIcon,
         subitems: subitems,
       },
     });
@@ -172,13 +172,13 @@ function updateSubitemSettings(item, name, value) {
 
     subitems.forEach((subitem) => {
       if (subitem.name === name) {
-        subitem.active = value;
+        subitem.displayIcon = value;
       }
     });
 
     updateSettings({
       time: {
-        active: settings.time.active,
+        displayIcon: settings.time.displayIcon,
         subitems: subitems,
       },
     });
@@ -195,7 +195,7 @@ function updateSubitemSettings(item, name, value) {
         @change="
           updateSettings({
             date: {
-              active: $event,
+              displayIcon: $event,
               subitems: [...settings.date.subitems],
             },
           })
@@ -216,7 +216,7 @@ function updateSubitemSettings(item, name, value) {
         @change="
           updateSettings({
             time: {
-              active: $event,
+              displayIcon: $event,
               subitems: [...settings.time.subitems],
             },
           })

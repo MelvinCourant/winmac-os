@@ -12,46 +12,54 @@ export const useSettingsStore = defineStore('settings', () => {
 
   const settings = ref({
     battery: {
-      active: true,
+      displayIcon: true,
     },
     date: {
-      active: true,
+      displayIcon: true,
       subitems: [
         {
           name: 'day',
-          active: true,
+          displayIcon: true,
         },
         {
           name: 'month',
-          active: true,
+          displayIcon: true,
         },
         {
           name: 'year',
-          active: true,
+          displayIcon: true,
         },
       ],
+    },
+    network: {
+      displayIcon: true,
+      refreshTime: 10,
     },
     theme: 'system',
     time: {
-      active: true,
+      displayIcon: true,
       subitems: [
         {
           name: 'hours',
-          active: true,
+          displayIcon: true,
         },
         {
           name: 'minutes',
-          active: true,
+          displayIcon: true,
         },
         {
           name: 'seconds',
-          active: true,
+          displayIcon: true,
         },
       ],
     },
+    vibration: {
+      active: false,
+      displayIcon: true,
+    },
     wallpaper: {
-      image: 'background',
       display: 'cover',
+      image: 'background',
     },
   });
 
