@@ -14,7 +14,41 @@ export const useSettingsStore = defineStore('settings', () => {
     battery: {
       active: true,
     },
+    date: {
+      active: true,
+      subitems: [
+        {
+          name: 'day',
+          active: true,
+        },
+        {
+          name: 'month',
+          active: true,
+        },
+        {
+          name: 'year',
+          active: true,
+        },
+      ],
+    },
     theme: 'system',
+    time: {
+      active: true,
+      subitems: [
+        {
+          name: 'hours',
+          active: true,
+        },
+        {
+          name: 'minutes',
+          active: true,
+        },
+        {
+          name: 'seconds',
+          active: true,
+        },
+      ],
+    },
     wallpaper: {
       image: 'background',
       display: 'cover',

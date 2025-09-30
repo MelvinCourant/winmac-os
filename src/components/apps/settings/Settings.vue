@@ -1,13 +1,27 @@
 <script setup>
 import '../../../assets/css/components/apps/settings/_settings.scss';
 import SettingsJson from '../../../data/settings.json';
-import { defineAsyncComponent, inject, reactive, ref, watch } from 'vue';
+import {
+  defineAsyncComponent,
+  inject,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+} from 'vue';
 
 defineProps({
   app: {
     type: Object,
     required: true,
   },
+});
+
+const onAppMounted = inject('onAppMounted');
+onMounted(() => {
+  if (onAppMounted) {
+    onAppMounted('settings');
+  }
 });
 
 const settingsComponents = reactive({});
@@ -89,7 +103,6 @@ watch(inject('displaySettingsPage'), (value) => {
         oldPageDisplayed === setting.name ||
         actualPageDisplayed === setting.name
       "
-      :data-settings-page="setting.name"
       :class="{
         'settings-page__highlighted': actualPageDisplayed === setting.name,
       }"

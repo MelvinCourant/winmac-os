@@ -37,7 +37,14 @@ defineEmits(['click']);
             <button
               v-if="item.subitems"
               class="header__subitem"
-              @click="$emit('click', item.name)"
+              @click="
+                $emit(
+                  'click',
+                  item.name === 'date' || item.name === 'time'
+                    ? 'date-time'
+                    : item.name,
+                )
+              "
             >
               <template v-for="(subitem, index) in item.subitems">
                 <p v-if="subitem.active">

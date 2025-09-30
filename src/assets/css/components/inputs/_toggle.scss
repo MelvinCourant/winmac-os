@@ -2,6 +2,20 @@
   display: flex;
   justify-content: space-between;
 
+  &--disabled {
+    color: var(--hover);
+
+    .toggle {
+      &__switch {
+        background: var(--hover) !important;
+      }
+
+      &__input {
+        cursor: not-allowed;
+      }
+    }
+  }
+
   &__switch {
     position: relative;
     background: var(--background);

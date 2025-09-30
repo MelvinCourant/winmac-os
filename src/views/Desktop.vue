@@ -132,8 +132,15 @@ const batteryStatus = [
 ];
 const pingRefreshTime = ref(10000);
 const settingsPageToDisplayed = ref(null);
+const mountedResolvers = ref({});
 
 provide('displaySettingsPage', settingsPageToDisplayed);
+provide('onAppMounted', (appName) => {
+  if (mountedResolvers.value[appName]) {
+    mountedResolvers.value[appName]();
+    delete mountedResolvers.value[appName];
+  }
+});
 
 setInterval(updateDateTime, 1000);
 navigator.getBattery().then((battery) => {
@@ -254,17 +261,24 @@ function updatePing() {
   serverRequest.send();
 }
 
-function handleApp(app) {
-  let appIsOpened = false;
+async function handleApp(app, shouldDisplay = true) {
+  let existingWindow = windows.value.find((window) => window.name === app.name);
 
-  windows.value.forEach((window) => {
-    if (window.name === app.name) {
-      appIsOpened = true;
-    }
+  if (existingWindow) {
+    existingWindow.display = true;
+    return;
+  }
+
+  windows.value.push({ ...app, display: false });
+
+  await new Promise((resolve) => {
+    mountedResolvers.value[app.name] = resolve;
   });
 
-  if (!appIsOpened) {
-    windows.value.push(app);
+  existingWindow = windows.value.find((window) => window.name === app.name);
+
+  if (existingWindow && shouldDisplay) {
+    existingWindow.display = true;
   }
 }
 
@@ -279,8 +293,20 @@ function handleCloseApp({ action, app }) {
 }
 
 async function displaySettingsPage(settingsPage) {
-  handleApp(AppsJson.find((app) => app.name === 'settings'));
+  const settingsApp = AppsJson.find((app) => app.name === 'settings');
+
+  await handleApp(settingsApp, false);
+
   settingsPageToDisplayed.value = settingsPage;
+
+  await nextTick();
+
+  const settingsWindow = windows.value.find(
+    (window) => window.name === 'settings',
+  );
+  if (settingsWindow) {
+    settingsWindow.display = true;
+  }
 
   await nextTick();
   // Reset settings watch

@@ -8,4 +8,11 @@
   border-radius: 6px;
   overflow: hidden;
   box-shadow: var(--shadow);
+  transition: transform .2s ease-in-out;
+
+  &--hidden {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+    pointer-events: none;
+  }
 }

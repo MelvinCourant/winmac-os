@@ -8,6 +8,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  display: {
+    type: Boolean,
+    default: false,
+  },
 });
 defineEmits(['actionClicked']);
 
@@ -137,7 +141,7 @@ window.addEventListener('mouseup', stopGrabbing);
 
 <template>
   <div
-    class="window"
+    :class="['window', { 'window--hidden': !display }]"
     :style="{
       top: positions.top ? `${positions.top}px` : '',
       left: positions.top ? `${positions.left}px` : '',

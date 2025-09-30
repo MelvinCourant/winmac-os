@@ -13,7 +13,9 @@ defineEmits(['actionClicked']);
 <template>
   <Window
     v-for="window in windows"
+    :key="window.name"
     :app="window"
+    :display="window.display"
     @actionClicked="$emit('actionClicked', $event)"
   />
 </template>
