@@ -1,7 +1,7 @@
 <script setup>
 import '../../../assets/css/components/apps/settings/_settings.scss';
 import SettingsJson from '../../../data/settings.json';
-import { defineAsyncComponent, reactive, ref } from 'vue';
+import { defineAsyncComponent, inject, reactive, ref, watch } from 'vue';
 
 defineProps({
   app: {
@@ -11,7 +11,8 @@ defineProps({
 });
 
 const settingsComponents = reactive({});
-const pageDisplayed = ref(null);
+const actualPageDisplayed = ref(null);
+const oldPageDisplayed = ref(null);
 
 // Generate dynamically settings pages
 SettingsJson.forEach((setting) => {
@@ -44,17 +45,33 @@ SettingsJson.forEach((setting) => {
     }
   }
 });
+
+watch(inject('displaySettingsPage'), (value) => {
+  if (value) {
+    oldPageDisplayed.value = actualPageDisplayed.value;
+    actualPageDisplayed.value = value;
+
+    setTimeout(() => {
+      oldPageDisplayed.value = null;
+    }, 500);
+  }
+});
 </script>
 
 <template>
-  <div :class="['settings', { 'settings--page-displayed': pageDisplayed }]">
+  <div
+    :class="['settings', { 'settings--page-displayed': actualPageDisplayed }]"
+  >
     <h2 class="settings__title">{{ app.title }}</h2>
     <div class="settings__list">
       <button
         class="settings-item"
         v-for="setting in SettingsJson"
         :key="setting.name"
-        @click="pageDisplayed = setting.name"
+        @click="
+          oldPageDisplayed = actualPageDisplayed;
+          actualPageDisplayed = setting.name;
+        "
       >
         <div class="settings-item__icon" v-html="setting.icon"></div>
         <div class="settings-item__text">
@@ -68,8 +85,18 @@ SettingsJson.forEach((setting) => {
     <component
       v-if="settingsComponents[setting.name]"
       :is="settingsComponents[setting.name]"
-      :display="pageDisplayed === setting.name"
-      @back="pageDisplayed = null"
+      :display="
+        oldPageDisplayed === setting.name ||
+        actualPageDisplayed === setting.name
+      "
+      :data-settings-page="setting.name"
+      :class="{
+        'settings-page__highlighted': actualPageDisplayed === setting.name,
+      }"
+      @back="
+        oldPageDisplayed = null;
+        actualPageDisplayed = null;
+      "
     />
   </template>
 </template>

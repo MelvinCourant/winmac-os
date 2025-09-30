@@ -20,6 +20,10 @@
     transform: translateX(100%);
   }
 
+  &__highlighted {
+    z-index: 4;
+  }
+
   &__title {
     font-size: functions.rem(36);
     font-weight: 700;

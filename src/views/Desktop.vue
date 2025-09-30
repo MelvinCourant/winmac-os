@@ -4,7 +4,7 @@ import Header from '../components/layouts/Header.vue';
 import AppsJson from '../data/apps.json';
 import DesktopApps from '../components/layouts/DesktopApps.vue';
 import Windows from '../components/layouts/Windows.vue';
-import { computed, reactive, ref } from 'vue';
+import { computed, nextTick, provide, ref } from 'vue';
 import { useSettingsStore } from '../stores/settings.js';
 
 const settingsStore = useSettingsStore();
@@ -131,6 +131,9 @@ const batteryStatus = [
   },
 ];
 const pingRefreshTime = ref(10000);
+const settingsPageToDisplayed = ref(null);
+
+provide('displaySettingsPage', settingsPageToDisplayed);
 
 setInterval(updateDateTime, 1000);
 navigator.getBattery().then((battery) => {
@@ -145,7 +148,7 @@ setInterval(updatePing, pingRefreshTime.value);
 
 function updateBatteryIcon(battery) {
   let iconFind = false;
-  const headerBattery = header
+  const headerBattery = header.value
     .find((group) => group.side === 'right')
     .items.find((item) => item.name === 'battery');
 
@@ -158,7 +161,7 @@ function updateBatteryIcon(battery) {
 }
 
 function updateDateTime() {
-  const headerLeft = header.find((group) => group.side === 'left');
+  const headerLeft = header.value.find((group) => group.side === 'left');
   const time = headerLeft.items.find((item) => item.name === 'time');
   const date = headerLeft.items.find((item) => item.name === 'date');
 
@@ -229,7 +232,7 @@ function updatePing() {
   serverRequest.open('GET', window.location.href, true);
 
   serverRequest.onload = function () {
-    const ping = header
+    const ping = header.value
       .find((group) => group.side === 'right')
       .items.find((item) => item.name === 'network');
     const endTime = performance.now();
@@ -274,12 +277,21 @@ function handleCloseApp({ action, app }) {
     });
   }
 }
+
+async function displaySettingsPage(settingsPage) {
+  handleApp(AppsJson.find((app) => app.name === 'settings'));
+  settingsPageToDisplayed.value = settingsPage;
+
+  await nextTick();
+  // Reset settings watch
+  settingsPageToDisplayed.value = null;
+}
 </script>
 
 <template>
   <main class="desktop">
     <h1 class="hidden-title">Winmac OS</h1>
-    <Header :header="header" />
+    <Header :header="header" @click="displaySettingsPage" />
     <DesktopApps :apps="AppsJson" @appIconClicked="handleApp($event)" />
     <Windows :windows="windows" @actionClicked="handleCloseApp($event)" />
   </main>

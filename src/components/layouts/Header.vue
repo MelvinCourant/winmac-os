@@ -7,6 +7,8 @@ defineProps({
     required: true,
   },
 });
+
+defineEmits(['click']);
 </script>
 
 <template>
@@ -16,7 +18,12 @@ defineProps({
         :class="`header__${group.side}`"
         v-show="
           group.side === 'left' ||
-          (group.side === 'right' && group.items.some((item) => item.active && (!item.subitems || item.subitems.some((s) => s.active))))
+          (group.side === 'right' &&
+            group.items.some(
+              (item) =>
+                item.active &&
+                (!item.subitems || item.subitems.some((s) => s.active)),
+            ))
         "
       >
         <template v-for="item in group.items">
@@ -27,7 +34,11 @@ defineProps({
             "
             class="header__item"
           >
-            <button v-if="item.subitems" class="header__subitem">
+            <button
+              v-if="item.subitems"
+              class="header__subitem"
+              @click="$emit('click', item.name)"
+            >
               <template v-for="(subitem, index) in item.subitems">
                 <p v-if="subitem.active">
                   <template v-if="subitem.value < 10">0</template
@@ -50,6 +61,7 @@ defineProps({
               v-else
               class="header__item-button"
               :style="{ color: item.color ? `var(--${item.color})` : '' }"
+              @click="$emit('click', item.name)"
             >
               <div v-if="item.icon" v-html="item.icon"></div>
               <template v-else>{{ item.value }}</template>
