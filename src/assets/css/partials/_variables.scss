@@ -19,6 +19,7 @@ $global-variables: (
 $dark-theme-colors: (
   'color': #D9DBDE,
   'background': #202225,
+  'background-application': rgba(32, 34, 37, 0.8),
   'hover': #363A3F,
   'input': #34373C,
   'input-hover': #474B52,
@@ -27,6 +28,7 @@ $dark-theme-colors: (
 $light-theme-colors: (
   'color': #202225,
   'background': #D9DBDE,
+  'background-application': rgba(217, 219, 222, 0.8),
   'hover': #C0C4C9,
   'input': #C3C6CB,
   'input-hover': #878D97,

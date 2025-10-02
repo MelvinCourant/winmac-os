@@ -103,7 +103,7 @@ function submitPassword() {
     updateSettings({
       security: {
         active: settings.security.active,
-        method: settings.security.method,
+        method: popin.method,
         password: password.value,
       },
     });
@@ -135,6 +135,7 @@ function submitPassword() {
             security: {
               active: $event,
               method: settings.security.method,
+              password: settings.security.password,
             },
           })
         "

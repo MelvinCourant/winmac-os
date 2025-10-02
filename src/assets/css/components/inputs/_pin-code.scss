@@ -31,7 +31,7 @@
   }
 
   &__button {
-    @include mixins.resetButton(none, var(--background));
+    @include mixins.resetButton(none, none);
     display: flex;
     justify-content: center;
     align-items: center;
