@@ -48,4 +48,12 @@
   &__subitem {
     @include mixins.resetButton(none, var(--background));
   }
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+  }
 }

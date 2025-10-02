@@ -1,6 +1,7 @@
 <script setup>
 import '../../assets/css/components/inputs/_pin-code.scss';
-import { onUnmounted, ref } from 'vue';
+import { onUnmounted, ref, watch } from 'vue';
+import { useSettingsStore } from '../../stores/settings.js';
 
 const props = defineProps({
   size: {
@@ -18,6 +19,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['input']);
 
+const { settings } = useSettingsStore();
 const pinButtons = [
   { text: '1', value: '1' },
   { text: '2', value: '2' },
@@ -39,7 +41,21 @@ const pinButtons = [
 ];
 const code = ref('');
 
+function vibrate() {
+  if (settings.vibration.active) {
+    window.navigator.vibrate(200);
+  }
+}
+
+watch(props.vibrate, (value) => {
+  if (value) {
+    vibrate();
+  }
+});
+
 function tapPinCode(key) {
+  vibrate();
+
   if (key === 'erase' && code.value.length > 0) {
     code.value = code.value.slice(0, -1);
     emit('input', code.value);

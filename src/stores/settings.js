@@ -59,7 +59,7 @@ export const useSettingsStore = defineStore('settings', () => {
       ],
     },
     vibration: {
-      active: false,
+      active: true,
       displayIcon: true,
     },
     wallpaper: {

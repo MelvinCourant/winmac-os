@@ -7,7 +7,6 @@ defineProps({
     required: true,
   },
 });
-
 defineEmits(['click']);
 </script>
 
@@ -43,7 +42,8 @@ defineEmits(['click']);
                   item.name === 'date' || item.name === 'time'
                     ? 'date-time'
                     : item.name,
-                )
+                );
+                vibrate;
               "
             >
               <template v-for="(subitem, index) in item.subitems">
@@ -66,9 +66,16 @@ defineEmits(['click']);
               v-else
               class="header__item-button"
               :style="{ color: item.color ? `var(--${item.color})` : '' }"
-              @click="$emit('click', item.name)"
+              @click="
+                $emit('click', item.name);
+                vibrate;
+              "
             >
-              <div v-if="item.icon" v-html="item.icon"></div>
+              <div
+                class="header__icon"
+                v-if="item.icon"
+                v-html="item.icon"
+              ></div>
               <template v-else>{{ item.value }}</template>
             </button>
           </div>
