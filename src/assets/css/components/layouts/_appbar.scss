@@ -1,0 +1,38 @@
+.appbar {
+  position: fixed;
+  left: 50%;
+  bottom: 5px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  background: var(--background-appbar);
+  padding: 0 10px;
+  border-radius: 25px;
+
+  &__left,
+  &__right {
+    padding: 10px 0 0;
+  }
+
+  &__right {
+    position: relative;
+  }
+
+  &:has(.appbar__left) {
+    .appbar__right {
+      padding-left: 13px;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        background: var(--color);
+        width: 1px;
+        height: 50px;
+        border-radius: 1px;
+      }
+    }
+  }
+}

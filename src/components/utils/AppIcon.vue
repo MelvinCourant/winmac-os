@@ -6,6 +6,10 @@ defineProps({
     type: Object,
     required: true,
   },
+  location: {
+    type: String,
+    required: true,
+  },
 });
 defineEmits(['appIconClicked']);
 
@@ -16,7 +20,10 @@ function generateUrl(src) {
 
 <template>
   <button
-    class="app-icon"
+    :class="[
+      `app-icon app-icon--${location}`,
+      { 'app-icon--opened': app.opened },
+    ]"
     :title="`Ouvrir l'application ${app.title}`"
     @click="$emit('appIconClicked', app)"
   >
@@ -25,6 +32,8 @@ function generateUrl(src) {
       :src="generateUrl(app.image)"
       :alt="`Icône de l'application ${app.title}`"
     />
-    <h3 class="app-icon__name">{{ app.title }}</h3>
+    <h3 class="app-icon__name">
+      <span>{{ app.title }}</span>
+    </h3>
   </button>
 </template>

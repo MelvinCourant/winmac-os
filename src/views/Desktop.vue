@@ -4,8 +4,9 @@ import Header from '../components/layouts/Header.vue';
 import AppsJson from '../data/apps.json';
 import DesktopApps from '../components/layouts/DesktopApps.vue';
 import Windows from '../components/layouts/Windows.vue';
-import { computed, nextTick, provide, ref, watch } from 'vue';
+import { computed, nextTick, provide, reactive, ref, watch } from 'vue';
 import { useSettingsStore } from '../stores/settings.js';
+import Appbar from '../components/layouts/Appbar.vue';
 
 const settingsStore = useSettingsStore();
 const { settings } = settingsStore;
@@ -179,6 +180,12 @@ const pingRefreshTime = ref(settings.network.refreshTime * 1000 || 10000);
 const pingIntervalId = ref(null);
 const settingsPageToDisplayed = ref(null);
 const mountedResolvers = ref({});
+const appbarApplications = reactive(
+  AppsJson.filter((app) => app.appbar).map((app) => ({
+    ...app,
+    opened: false,
+  })),
+);
 
 provide('displaySettingsPage', settingsPageToDisplayed);
 provide('onAppMounted', (appName) => {
@@ -299,6 +306,14 @@ async function handleApp(app, shouldDisplay = true) {
   if (existingWindow && shouldDisplay) {
     existingWindow.display = true;
   }
+
+  const appInAppbar = appbarApplications.find(
+    (appbarApplication) => appbarApplication.name === app.name,
+  );
+
+  if (appInAppbar) {
+    appInAppbar.opened = true;
+  }
 }
 
 function handleCloseApp({ action, app }) {
@@ -308,6 +323,14 @@ function handleCloseApp({ action, app }) {
         windows.value.splice(windows.value.indexOf(window), 1);
       }
     });
+
+    const appInAppbar = appbarApplications.find(
+      (appbarApplication) => appbarApplication.name === app.name,
+    );
+
+    if (appInAppbar) {
+      appInAppbar.opened = false;
+    }
   }
 }
 
@@ -339,5 +362,6 @@ async function displaySettingsPage(settingsPage) {
     <Header :header="header" @click="displaySettingsPage" />
     <DesktopApps :apps="AppsJson" @appIconClicked="handleApp($event)" />
     <Windows :windows="windows" @actionClicked="handleCloseApp($event)" />
+    <Appbar :apps="appbarApplications" @appIconClicked="handleApp($event)" />
   </main>
 </template>

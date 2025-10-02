@@ -17,6 +17,7 @@ defineEmits(['appIconClicked']);
       v-for="app in apps"
       :key="app.component"
       :app="app"
+      location="desktop"
       @appIconClicked="$emit('appIconClicked', $event)"
     />
   </div>

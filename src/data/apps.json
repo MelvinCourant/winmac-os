@@ -3,13 +3,15 @@
     "name": "settings",
     "title": "Paramètres",
     "image": "settings",
-    "component": "Settings"
+    "component": "Settings",
+    "appbar": true
   },
   {
     "name": "shifumi-fight",
     "title": "Shifumi Fight",
     "image": "shifumi-fight",
     "link": "https://shifumi-fight.melvincourant.fr/",
-    "component": ""
+    "component": "",
+    "appbar": true
   }
 ]
