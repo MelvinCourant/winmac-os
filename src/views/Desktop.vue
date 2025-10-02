@@ -10,8 +10,6 @@ import { useSettingsStore } from '../stores/settings.js';
 const settingsStore = useSettingsStore();
 const { settings } = settingsStore;
 const windows = ref([]);
-
-// Valeurs réactives pour date, time et network
 const currentDay = ref(new Date().getDate());
 const currentMonth = ref(new Date().getMonth() + 1);
 const currentYear = ref(new Date().getFullYear());
@@ -25,7 +23,6 @@ const batteryIcon = ref(
 );
 const networkValue = ref('0ms');
 const networkColor = ref('green');
-
 const header = computed(() => [
   {
     side: 'left',
@@ -170,7 +167,6 @@ provide('onAppMounted', (appName) => {
   }
 });
 
-// Watch pour mettre à jour le ping interval quand le refreshTime change
 watch(
   () => settings.network.refreshTime,
   (newRefreshTime) => {

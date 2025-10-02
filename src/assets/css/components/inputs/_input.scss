@@ -2,6 +2,7 @@
 @use "../../partials/mixins";
 
 .input {
+  position: relative;
   display: flex;
   justify-content: space-between;
 
@@ -18,7 +19,9 @@
   }
 
   &__wrapper,
-  &--button {
+  &--button,
+  &--submit,
+  &--password {
     position: relative;
     @include mixins.resetButton(none, var(--input));
     display: flex;
@@ -52,7 +55,8 @@
     cursor: pointer;
   }
 
-  &--button {
+  &--button,
+  &--submit {
     &:hover:not(:disabled) {
       background: var(--input-hover);
     }
@@ -80,7 +84,44 @@
     }
   }
 
+  &--password,
+  &:has(.input--password) {
+    width: 100%;
+  }
+
   input {
     transition: opacity .2s ease-in-out;
+  }
+
+  &--vibrate {
+    animation: vibrate 0.2s;
+
+    @keyframes vibrate {
+      0% {
+        transform: translateX(0);
+      }
+      25% {
+        transform: translateX(-20px);
+      }
+      75% {
+        transform: translateX(20px);
+      }
+      100% {
+        transform: translateX(0);
+      }
+    }
+  }
+
+  &__error {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(- functions.rem(6));
+    color: var(--red);
+    font-size: functions.rem(14);
+  }
+
+  &:has(.input__error) {
+    padding-top: calc(functions.rem(30) + functions.rem(6));
   }
 }

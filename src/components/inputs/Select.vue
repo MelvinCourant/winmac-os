@@ -18,7 +18,7 @@ defineEmits(['change']);
 </script>
 
 <template>
-  <div class="select">
+  <div :class="['select', { 'select--disabled': attributes.disabled }]">
     <label v-bind="label.attributes" v-if="label">{{ label.text }}</label>
     <div class="select__field">
       <select

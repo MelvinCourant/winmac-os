@@ -10,6 +10,14 @@ defineProps({
     type: Object,
     required: true,
   },
+  vibrate: {
+    type: Boolean,
+    default: false,
+  },
+  error: {
+    type: String,
+    default: '',
+  },
 });
 defineEmits(['change', 'click']);
 </script>
@@ -28,9 +36,12 @@ defineEmits(['change', 'click']);
     <input
       v-else
       v-bind="attributes"
-      :class="`input--${attributes.type}`"
+      :class="[`input--${attributes.type}`, { 'input--vibrate': vibrate }]"
       @change="$emit('change', $event.target)"
       @click="$emit('click')"
     />
+    <div class="input__error" v-if="error">
+      {{ error }}
+    </div>
   </div>
 </template>

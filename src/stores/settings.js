@@ -35,6 +35,11 @@ export const useSettingsStore = defineStore('settings', () => {
       displayIcon: true,
       refreshTime: 10,
     },
+    security: {
+      active: false,
+      method: 'none',
+      password: '',
+    },
     theme: 'system',
     time: {
       displayIcon: true,

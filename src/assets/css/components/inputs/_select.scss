@@ -2,6 +2,13 @@
 @use "../../partials/mixins";
 
 .select {
+  &--disabled {
+    label {
+      color: var(--hover);
+      pointer-events: none;
+    }
+  }
+
   &__field {
     position: relative;
 
@@ -30,8 +37,13 @@
       font-size: functions.rem(14);
       font-weight: 400;
 
-      &:hover {
+      &:hover:not(:disabled) {
         background: var(--input-hover);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
       }
     }
   }
