@@ -18,9 +18,10 @@ const onTabClosed = inject('onTabClosed');
 
 onMounted(() => {
   if (tabs.value.length === 0 && props.app.url) {
-    const favicon = `/src/assets/imgs/apps/favicon/${props.app.image}.svg`;
+    const favicon = `/../../imgs/apps/favicon/${props.app.image}.svg`;
+
     tabs.value.push({
-      title: props.app.title,
+      title: props.app.tabTitle,
       favicon: favicon,
       url: props.app.url,
     });
@@ -57,7 +58,7 @@ function addTab(url, title, image) {
     return;
   }
 
-  const favicon = `/src/assets/imgs/apps/favicon/${image}.svg`;
+  const favicon = `/../../imgs/apps/favicon/${image}.svg`;
 
   tabs.value.push({
     title: title,
@@ -68,23 +69,20 @@ function addTab(url, title, image) {
   activeTabIndex.value = tabs.value.length - 1;
 }
 
-function getIframeContent(index) {
+function sendAppMounted() {
   if (onAppMounted && tabs.value.length === 1) {
     onAppMounted('Browser');
   }
+}
 
+function reloadIframe() {
   const iframe = document.querySelector(
-    `.browser__iframe[data-index="${index}"]`,
+    `.browser__iframe[data-index="${activeTabIndex.value}"]`,
   );
-  if (!iframe) return;
-
-  try {
-    // Real title in production
-    const title = iframe.contentWindow.document.title;
-    if (title && tabs.value[index]) {
-      tabs.value[index].title = title;
-    }
-  } catch (e) {}
+  if (iframe) {
+    const currentSrc = iframe.src;
+    iframe.src = currentSrc;
+  }
 }
 
 defineExpose({ addTab, tabs });
@@ -97,6 +95,7 @@ defineExpose({ addTab, tabs });
       :activeTabIndex="activeTabIndex"
       @closeTab="handleCloseTab"
       @setActiveTab="setActiveTab"
+      @reload="reloadIframe"
     />
     <iframe
       v-for="(tab, index) in tabs"
@@ -105,7 +104,7 @@ defineExpose({ addTab, tabs });
       :data-index="index"
       :src="tab.url"
       v-show="index === activeTabIndex"
-      @load="getIframeContent(index)"
+      @load="sendAppMounted"
     ></iframe>
   </div>
 </template>

@@ -12,7 +12,7 @@ const props = defineProps({
     required: true,
   },
 });
-const emit = defineEmits(['closeTab', 'setActiveTab']);
+const emit = defineEmits(['closeTab', 'setActiveTab', 'reload']);
 
 function handleCloseTab(index) {
   emit('closeTab', index);
@@ -94,7 +94,7 @@ const browserTabs = computed(() =>
             />
           </svg>
         </button>
-        <button class="browser-bar__button">
+        <button class="browser-bar__button" @click.stop="$emit('reload')">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="12"

@@ -13,7 +13,8 @@
     "url": "https://shifumi-fight.melvincourant.fr/",
     "component": "Browser",
     "appbar": true,
-    "forceFullscreen": true
+    "forceFullscreen": true,
+    "tabTitle": "Shifumi Fight Pokémon Edition"
   },
   {
     "name": "melvin-courant",
@@ -22,6 +23,7 @@
     "url": "https://melvincourant.fr/",
     "component": "Browser",
     "appbar": true,
-    "forceFullscreen": true
+    "forceFullscreen": true,
+    "tabTitle": "Melvin Courant - Développeur Front-end"
   }
 ]

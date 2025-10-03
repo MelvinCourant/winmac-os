@@ -314,7 +314,7 @@ async function handleApp(app, shouldDisplay = true) {
         windowRef.appComponentRef &&
         windowRef.appComponentRef.addTab
       ) {
-        windowRef.appComponentRef.addTab(app.url, app.title, app.image);
+        windowRef.appComponentRef.addTab(app.url, app.tabTitle, app.image);
         windows.value[browserWindowIndex].display = true;
 
         const appInAppbar = appbarApplications.find(
