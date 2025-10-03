@@ -11,6 +11,7 @@ import Appbar from '../components/layouts/Appbar.vue';
 const settingsStore = useSettingsStore();
 const { settings } = settingsStore;
 const windows = ref([]);
+const windowsComponentRef = ref(null);
 const currentDay = ref(new Date().getDate());
 const currentMonth = ref(new Date().getMonth() + 1);
 const currentYear = ref(new Date().getFullYear());
@@ -194,6 +195,14 @@ provide('onAppMounted', (appName) => {
     delete mountedResolvers.value[appName];
   }
 });
+provide('onTabClosed', (url) => {
+  const appInAppbar = appbarApplications.find(
+    (appbarApplication) => appbarApplication.url === url,
+  );
+  if (appInAppbar) {
+    appInAppbar.opened = false;
+  }
+});
 
 watch(
   () => settings.network.refreshTime,
@@ -288,6 +297,39 @@ function updatePing() {
 }
 
 async function handleApp(app, shouldDisplay = true) {
+  if (app.component === 'Browser') {
+    const browserWindowIndex = windows.value.findIndex(
+      (window) => window.component === 'Browser',
+    );
+
+    if (
+      browserWindowIndex !== -1 &&
+      windowsComponentRef.value &&
+      windowsComponentRef.value.windowRefs
+    ) {
+      const windowRef =
+        windowsComponentRef.value.windowRefs[browserWindowIndex];
+      if (
+        windowRef &&
+        windowRef.appComponentRef &&
+        windowRef.appComponentRef.addTab
+      ) {
+        windowRef.appComponentRef.addTab(app.url, app.title, app.image);
+        windows.value[browserWindowIndex].display = true;
+
+        const appInAppbar = appbarApplications.find(
+          (appbarApplication) => appbarApplication.name === app.name,
+        );
+
+        if (appInAppbar) {
+          appInAppbar.opened = true;
+        }
+
+        return;
+      }
+    }
+  }
+
   let existingWindow = windows.value.find((window) => window.name === app.name);
 
   if (existingWindow) {
@@ -320,6 +362,37 @@ async function handleApp(app, shouldDisplay = true) {
 
 function handleCloseApp({ action, app }) {
   if (action.name === 'close') {
+    if (app.component === 'Browser') {
+      const browserWindowIndex = windows.value.findIndex(
+        (window) => window.name === app.name,
+      );
+
+      if (
+        browserWindowIndex !== -1 &&
+        windowsComponentRef.value &&
+        windowsComponentRef.value.windowRefs
+      ) {
+        const windowRef =
+          windowsComponentRef.value.windowRefs[browserWindowIndex];
+        if (
+          windowRef &&
+          windowRef.appComponentRef &&
+          windowRef.appComponentRef.tabs
+        ) {
+          const tabs = windowRef.appComponentRef.tabs;
+
+          tabs.forEach((tab) => {
+            const appInAppbar = appbarApplications.find(
+              (appbarApplication) => appbarApplication.url === tab.url,
+            );
+            if (appInAppbar) {
+              appInAppbar.opened = false;
+            }
+          });
+        }
+      }
+    }
+
     windows.value.forEach((window) => {
       if (window.name === app.name) {
         windows.value.splice(windows.value.indexOf(window), 1);
@@ -363,7 +436,11 @@ async function displaySettingsPage(settingsPage) {
     <h1 class="hidden-title">Winmac OS</h1>
     <Header :header="header" @click="displaySettingsPage" />
     <DesktopApps :apps="AppsJson" @appIconClicked="handleApp($event)" />
-    <Windows :windows="windows" @actionClicked="handleCloseApp($event)" />
+    <Windows
+      ref="windowsComponentRef"
+      :windows="windows"
+      @actionClicked="handleCloseApp($event)"
+    />
     <Appbar :apps="appbarApplications" @appIconClicked="handleApp($event)" />
   </main>
 </template>

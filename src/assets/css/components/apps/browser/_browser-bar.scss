@@ -15,35 +15,50 @@
 
   &__tab {
     position: relative;
-    z-index: 6;
     display: flex;
     width: 230px;
     height: 32px;
     padding: 0 10px;
     align-items: center;
     gap: 10px;
-    background: var(--browser-background);
+    background: var(--background);
     border-radius: 10px 10px 0 0;
 
-    &:before,
-    &:after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      width: 10px;
-      height: 10px;
-      background: var(--background);
-      border-radius: 0 0 10px 0;
-      box-shadow: 3px 3px 0 3px var(--browser-background);
+    &--active {
+      z-index: 7;
+      background: var(--browser-background);
+
+      &:before,
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        width: 10px;
+        height: 10px;
+        background: var(--background);
+        border-radius: 0 0 10px 0;
+        box-shadow: 3px 3px 0 3px var(--browser-background);
+      }
+
+      &:before {
+        left: -10px;
+      }
+
+      &:after {
+        right: -10px;
+        transform: scaleX(-1);
+      }
+
+      .browser-bar__title {
+        &:after {
+          background: linear-gradient(270deg, var(--browser-background) 0%, var(--browser-transparent) 100%);
+        }
+      }
     }
 
-    &:before {
-      left: -10px;
-    }
-
-    &:after {
-      right: -10px;
-      transform: scaleX(-1);
+    &:not(.browser-bar__tab--active) {
+      z-index: 6;
+      cursor: pointer;
     }
   }
 
@@ -68,7 +83,7 @@
       right: 0;
       width: 18px;
       height: 100%;
-      background: linear-gradient(270deg, var(--browser-background) 0%, var(--browser-transparent) 100%);
+      background: linear-gradient(270deg, var(--background) 0%, var(--background-transparent) 100%);
     }
   }
 

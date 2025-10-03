@@ -1,6 +1,6 @@
 <script setup>
 import '../../assets/css/components/window/_window.scss';
-import { defineAsyncComponent, reactive, ref } from 'vue';
+import { defineAsyncComponent, provide, reactive, ref } from 'vue';
 import WindowActions from './WindowActions.vue';
 
 const props = defineProps({
@@ -13,7 +13,15 @@ const props = defineProps({
     default: false,
   },
 });
-defineEmits(['actionClicked']);
+const emit = defineEmits(['actionClicked']);
+const appComponentRef = ref(null);
+
+provide('closeApp', () => {
+  const closeAction = actions.find((action) => action.name === 'close');
+  emit('actionClicked', { action: closeAction, app: props.app });
+});
+
+defineExpose({ appComponentRef });
 
 const AppComponent = defineAsyncComponent(() => {
   if (props.app.component !== 'Browser') {
@@ -170,6 +178,6 @@ window.addEventListener('mouseup', stopGrabbing);
       @stopGrabbing="stopGrabbing"
       :style="{ cursor: grabbing ? 'grabbing' : '' }"
     />
-    <AppComponent v-if="app.component" :app="app" />
+    <AppComponent v-if="app.component" :app="app" ref="appComponentRef" />
   </div>
 </template>

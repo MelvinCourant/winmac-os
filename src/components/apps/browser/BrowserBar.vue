@@ -7,12 +7,25 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  activeTabIndex: {
+    type: Number,
+    required: true,
+  },
 });
+const emit = defineEmits(['closeTab', 'setActiveTab']);
+
+function handleCloseTab(index) {
+  emit('closeTab', index);
+}
+
+function handleTabClick(index) {
+  emit('setActiveTab', index);
+}
 
 const browserTabs = computed(() =>
   props.tabs.map((tab, index) => ({
     ...tab,
-    active: index === 0,
+    active: index === props.activeTabIndex,
   })),
 );
 </script>
@@ -20,21 +33,22 @@ const browserTabs = computed(() =>
 <template>
   <div class="browser-bar">
     <div class="browser-bar__tabs">
-      <div class="browser-bar__tab" v-for="tab in tabs">
+      <div
+        :class="[
+          'browser-bar__tab',
+          { 'browser-bar__tab--active': tab.active },
+        ]"
+        v-for="(tab, index) in browserTabs"
+        :key="index"
+        @click="handleTabClick(index)"
+      >
         <img
           class="browser-bar__favicon"
           :src="tab.favicon"
           :alt="`Favicon du site ${tab.title}`"
         />
         <h3 class="browser-bar__title">{{ tab.title }}</h3>
-        <button
-          class="browser-bar__close"
-          @click="
-            browserTabs.find(
-              (browserTab) => browserTab.url === tab.url,
-            ).active = false
-          "
-        >
+        <button class="browser-bar__close" @click.stop="handleCloseTab(index)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="10"
