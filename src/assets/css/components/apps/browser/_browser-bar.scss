@@ -1,0 +1,156 @@
+@use "../../../partials/functions";
+@use "../../../partials/mixins";
+
+.browser-bar {
+  display: flex;
+  flex-direction: column;
+  padding-top: 6px;
+  height: fit-content;
+  background: var(--background);
+
+  &__tabs {
+    display: flex;
+    padding-left: 40px;
+  }
+
+  &__tab {
+    position: relative;
+    z-index: 6;
+    display: flex;
+    width: 230px;
+    height: 32px;
+    padding: 0 10px;
+    align-items: center;
+    gap: 10px;
+    background: var(--browser-background);
+    border-radius: 10px 10px 0 0;
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      width: 10px;
+      height: 10px;
+      background: var(--background);
+      border-radius: 0 0 10px 0;
+      box-shadow: 3px 3px 0 3px var(--browser-background);
+    }
+
+    &:before {
+      left: -10px;
+    }
+
+    &:after {
+      right: -10px;
+      transform: scaleX(-1);
+    }
+  }
+
+  &__favicon {
+    width: auto;
+    height: 18px;
+  }
+
+  &__title {
+    position: relative;
+    max-width: 156px;
+    width: 100%;
+    overflow: hidden;
+    font-size: functions.rem(14);
+    font-weight: 400;
+    text-wrap: nowrap;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 18px;
+      height: 100%;
+      background: linear-gradient(270deg, var(--browser-background) 0%, var(--browser-transparent) 100%);
+    }
+  }
+
+  &__close {
+    @include mixins.resetButton(none, none);
+    display: flex;
+    width: 16px;
+    height: 16px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-left: auto;
+
+    &:hover {
+      background: var(--input-hover);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    height: fit-content;
+    gap: 2px;
+  }
+
+  &__button {
+    @include mixins.resetButton(none, none);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: var(--input-hover);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  &__search-bar {
+    position: relative;
+    display: flex;
+    flex: 1;
+
+    &-container {
+      display: flex;
+      gap: 10px;
+      background: var(--browser-background);
+      width: 100%;
+      height: fit-content;
+      padding: 6.5px 10px 6.5px 6px;
+    }
+
+    .browser-bar__button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+
+      &.search {
+        left: 4px;
+        background: var(--browser-background);
+      }
+
+      &.favourite {
+        right: 10px;
+      }
+    }
+
+    input {
+      @include mixins.resetButton(none, var(--background));
+      flex: 1;
+      height: 34px;
+      border-radius: 25px;
+      padding: 0 38px;
+      font-size: functions.rem(15);
+    }
+  }
+}

@@ -15,4 +15,17 @@
     transform: translate(-50%, -50%) scale(0);
     pointer-events: none;
   }
+
+  &--fullscreen {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 77px);
+    transform: none;
+
+    .window-actions + div {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }

@@ -298,10 +298,12 @@ async function handleApp(app, shouldDisplay = true) {
   windows.value.push({ ...app, display: false });
 
   await new Promise((resolve) => {
-    mountedResolvers.value[app.name] = resolve;
+    mountedResolvers.value[app.component] = resolve;
   });
 
-  existingWindow = windows.value.find((window) => window.name === app.name);
+  existingWindow = windows.value.find(
+    (window) => window.component === app.component,
+  );
 
   if (existingWindow && shouldDisplay) {
     existingWindow.display = true;

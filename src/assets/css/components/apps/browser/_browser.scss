@@ -1,0 +1,16 @@
+.browser {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--input);
+  border-radius: 6px;
+  overflow: hidden;
+
+  &__iframe {
+    flex: 1;
+    border: none;
+  }
+}
+
+.window {
+  box-shadow: none;
+}

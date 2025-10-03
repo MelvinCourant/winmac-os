@@ -20,7 +20,7 @@ defineProps({
 const onAppMounted = inject('onAppMounted');
 onMounted(() => {
   if (onAppMounted) {
-    onAppMounted('settings');
+    onAppMounted('Settings');
   }
 });
 

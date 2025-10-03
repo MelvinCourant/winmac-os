@@ -10,8 +10,18 @@
     "name": "shifumi-fight",
     "title": "Shifumi Fight",
     "image": "shifumi-fight",
-    "link": "https://shifumi-fight.melvincourant.fr/",
-    "component": "",
-    "appbar": true
+    "url": "https://shifumi-fight.melvincourant.fr/",
+    "component": "Browser",
+    "appbar": true,
+    "forceFullscreen": true
+  },
+  {
+    "name": "melvin-courant",
+    "title": "Portfolio Melvin Courant",
+    "image": "melvin-courant",
+    "url": "https://melvincourant.fr/",
+    "component": "Browser",
+    "appbar": true,
+    "forceFullscreen": true
   }
 ]
