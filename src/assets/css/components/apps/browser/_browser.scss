@@ -13,4 +13,10 @@
 
 .window {
   box-shadow: none;
+
+  &-actions {
+    top: 2px;
+    right: 2px;
+    width: calc(100% - 4px);
+  }
 }

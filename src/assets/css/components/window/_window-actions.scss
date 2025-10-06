@@ -9,6 +9,8 @@
   cursor: grab;
 
   .window-button {
+    background: var(--background);
+
     &:first-child {
       border-radius: 0 0 0 6px;
     }

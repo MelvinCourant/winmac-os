@@ -22,8 +22,14 @@
     "image": "melvin-courant",
     "url": "https://melvincourant.fr/",
     "component": "Browser",
-    "appbar": true,
     "forceFullscreen": true,
     "tabTitle": "Melvin Courant - Développeur Front-end"
+  },
+  {
+    "name": "calculator",
+    "title": "Calculatrice",
+    "image": "calculator",
+    "component": "Calculator",
+    "appbar": true
   }
 ]

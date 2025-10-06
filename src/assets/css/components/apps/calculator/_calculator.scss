@@ -1,0 +1,94 @@
+@use "../../../partials/functions";
+@use "../../../partials/mixins";
+
+.calculator {
+  display: flex;
+  width: 310px;
+  height: 419px;
+  padding: 26px 2px 2px 2px;
+  flex-direction: column;
+  background: var(--background-application);
+  backdrop-filter: var(--glass);
+
+  &__calculation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 3px;
+    height: 21.72%;
+    padding: 0 functions.rem(10);
+  }
+
+  &__intermediary-result {
+    font-size: functions.rem(20);
+    font-weight: 600;
+
+    &--small {
+      font-size: functions.rem(18);
+    }
+  }
+
+  &__result {
+    font-size: functions.rem(32);
+    font-weight: 700;
+
+    &--small {
+      font-size: functions.rem(24);
+    }
+  }
+
+  &__pad {
+    display: grid;
+    width: 100%;
+    flex: 1;
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0 2px 2px 2px;
+    gap: 2px;
+    border-radius: 0 0 2px 2px;
+    overflow: hidden;
+
+    &--top,
+    &--center,
+    &--bottom,
+    &--right {
+      display: grid;
+      gap: 2px;
+    }
+
+    &--top {
+      grid-template-columns: repeat(2, 1fr);
+      grid-column: 1 / 4;
+      grid-row: 1 / 2;
+    }
+
+    &--center {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      grid-column: 1 / 4;
+      grid-row: 2 / 5;
+    }
+
+    &--bottom {
+      grid-template-columns: repeat(3, 1fr);
+      grid-column: 1 / 4;
+      grid-row: 5 / 6;
+    }
+
+    &--right {
+      grid-template-rows: repeat(5, 1fr);
+      grid-column: 4 / 5;
+      grid-row: 1 / 6;
+    }
+  }
+
+  &__button {
+    @include mixins.resetButton(none, var(--background));
+    font-size: functions.rem(20);
+
+    &:active {
+      background: var(--input-hover);
+    }
+  }
+}

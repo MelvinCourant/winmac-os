@@ -189,10 +189,10 @@ const appbarApplications = reactive(
 );
 
 provide('displaySettingsPage', settingsPageToDisplayed);
-provide('onAppMounted', (appName) => {
-  if (mountedResolvers.value[appName]) {
-    mountedResolvers.value[appName]();
-    delete mountedResolvers.value[appName];
+provide('onAppMounted', (appComponent) => {
+  if (mountedResolvers.value[appComponent]) {
+    mountedResolvers.value[appComponent]();
+    delete mountedResolvers.value[appComponent];
   }
 });
 provide('onTabClosed', (url) => {
@@ -343,9 +343,7 @@ async function handleApp(app, shouldDisplay = true) {
     mountedResolvers.value[app.component] = resolve;
   });
 
-  existingWindow = windows.value.find(
-    (window) => window.component === app.component,
-  );
+  existingWindow = windows.value.find((window) => window.name === app.name);
 
   if (existingWindow && shouldDisplay) {
     existingWindow.display = true;
@@ -360,7 +358,7 @@ async function handleApp(app, shouldDisplay = true) {
   }
 }
 
-function handleCloseApp({ action, app }) {
+function handleWindowAction({ action, app }) {
   if (action.name === 'close') {
     if (app.component === 'Browser') {
       const browserWindowIndex = windows.value.findIndex(
@@ -406,6 +404,8 @@ function handleCloseApp({ action, app }) {
     if (appInAppbar) {
       appInAppbar.opened = false;
     }
+  } else if (action.name === 'minimize') {
+    app.display = false;
   }
 }
 
@@ -439,7 +439,7 @@ async function displaySettingsPage(settingsPage) {
     <Windows
       ref="windowsComponentRef"
       :windows="windows"
-      @actionClicked="handleCloseApp($event)"
+      @actionClicked="handleWindowAction($event)"
     />
     <Appbar :apps="appbarApplications" @appIconClicked="handleApp($event)" />
   </main>
