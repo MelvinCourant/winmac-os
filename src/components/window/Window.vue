@@ -112,10 +112,20 @@ function handleActions(actionSelected) {
         actionSelected.isActive = false;
 
         actions.find((action) => action.name === 'reduce').isActive = true;
+        hasTransition.value = false;
+
+        setTimeout(() => {
+          hasTransition.value = true;
+        }, 200);
       } else if (actionSelected.name === 'reduce' && actionSelected.isActive) {
         actionSelected.isActive = false;
 
         actions.find((action) => action.name === 'maximize').isActive = true;
+        hasTransition.value = false;
+
+        setTimeout(() => {
+          hasTransition.value = true;
+        }, 200);
       }
     }
   });
@@ -158,11 +168,15 @@ window.addEventListener('mouseup', stopGrabbing);
   <div
     :class="[
       'window',
-      { 'window--hidden': !display, 'window--fullscreen': app.forceFullscreen },
+      {
+        'window--hidden': !display,
+        'window--fullscreen': app.forceFullscreen,
+        'window--moved': !hasTransform,
+      },
     ]"
     :style="{
       top: positions.top ? `${positions.top}px` : '',
-      left: positions.top ? `${positions.left}px` : '',
+      left: positions.left ? `${positions.left}px` : '',
       transform: !hasTransform ? 'none' : '',
       transition: !hasTransition ? 'none' : '',
     }"

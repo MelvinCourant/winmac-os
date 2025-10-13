@@ -406,6 +406,10 @@ function handleWindowAction({ action, app }) {
     }
   } else if (action.name === 'minimize') {
     app.display = false;
+  } else if (action.name === 'maximize') {
+    app.forceFullscreen = true;
+  } else if (action.name === 'reduce') {
+    app.forceFullscreen = false;
   }
 }
 
