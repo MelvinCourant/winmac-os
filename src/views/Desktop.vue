@@ -333,7 +333,7 @@ async function handleApp(app, shouldDisplay = true) {
   let existingWindow = windows.value.find((window) => window.name === app.name);
 
   if (existingWindow) {
-    existingWindow.display = true;
+    existingWindow.display = !existingWindow.display;
     return;
   }
 

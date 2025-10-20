@@ -13,7 +13,7 @@ const props = defineProps({
     default: false,
   },
 });
-const emit = defineEmits(['actionClicked']);
+const emit = defineEmits(['actionClicked', 'windowGrabbed']);
 const appComponentRef = ref(null);
 
 provide('closeApp', () => {
@@ -146,6 +146,8 @@ function grabWindow(e) {
   cursorPositionInWindow.y = e.clientY - window.getBoundingClientRect().top;
   positions.top = e.clientY - cursorPositionInWindow.y;
   positions.left = e.clientX - cursorPositionInWindow.x;
+
+  emit('windowGrabbed', window);
 }
 
 function moveWindow(e) {

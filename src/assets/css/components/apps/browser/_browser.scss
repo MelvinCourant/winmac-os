@@ -14,6 +14,13 @@
 .window {
   box-shadow: none;
 
+  &:not(.window--fullscreen) {
+    .browser {
+      width: 90vw;
+      aspect-ratio: 16/10;
+    }
+  }
+
   &-actions {
     top: 2px;
     right: 2px;
