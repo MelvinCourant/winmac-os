@@ -31,7 +31,8 @@ function updateZIndexes(window) {
     (el) => el && el.name === window.name,
   );
 
-  if (!clickedElement) return;
+  if (!clickedElement || clickedElement.zIndex === currentMaxZindex.value)
+    return;
 
   currentMaxZindex.value++;
   clickedElement.zIndex = currentMaxZindex.value;
@@ -46,6 +47,8 @@ watch(
       zIndexes.value = zIndexes.value.filter((z) =>
         windowNames.includes(z.name),
       );
+
+      currentMaxZindex.value = oldLength;
     }
   },
 );

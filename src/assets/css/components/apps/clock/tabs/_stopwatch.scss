@@ -1,0 +1,43 @@
+@use '../../../../partials/functions';
+
+.stopwatch {
+  display: flex;
+  max-height: 100%;
+
+  &__steps {
+    display: flex;
+    flex-direction: column;
+    max-width: 172px;
+    width: 100%;
+    padding: functions.rem(20);
+
+    &-title {
+      font-size: functions.rem(20);
+      font-weight: 600;
+    }
+
+    &-list {
+      display: flex;
+      flex-direction: column;
+      gap: functions.rem(10);
+      margin-top: functions.rem(20);
+      overflow-y: auto;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  &__step {
+    display: flex;
+    justify-content: space-between;
+    font-size: functions.rem(16);
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 20px;
+  }
+}
