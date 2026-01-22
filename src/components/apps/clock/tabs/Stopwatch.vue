@@ -52,6 +52,18 @@ const buttons = reactive([
 ]);
 let timeout;
 
+window.addEventListener('keydown', (e) => {
+  if (e.key === ' ' && !timeout) {
+    handleActionTime('play');
+  } else if (e.key === ' ' && timeout) {
+    handleActionTime('break');
+  } else if (e.key === 'Escape' || e.key === 'Backspace') {
+    handleActionTime('stop');
+  } else if (e.key === 'Enter') {
+    handleActionTime('step');
+  }
+});
+
 function scrollToBottom() {
   nextTick(() => {
     if (stepsList.value) {
