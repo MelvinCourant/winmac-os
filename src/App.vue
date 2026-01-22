@@ -32,7 +32,7 @@ if (settings.theme === 'dark' || settings.theme === 'light') {
 }
 
 if (settings.wallpaper.image !== 'background') {
-  document.body.style.backgroundImage = `url(${settings.background.image})`;
+  document.body.style.backgroundImage = `url(${settings.wallpaper.image})`;
 } else if (settings.wallpaper.image === 'background') {
   document.body.style.backgroundImage = '';
 }
@@ -56,7 +56,7 @@ watch(settings, (value) => {
   }
 
   if (value.wallpaper.image !== 'background') {
-    document.body.style.backgroundImage = `url(${value.background.image})`;
+    document.body.style.backgroundImage = `url(${value.wallpaper.image})`;
   } else if (value.wallpaper.image === 'background') {
     document.body.style.backgroundImage = '';
   }

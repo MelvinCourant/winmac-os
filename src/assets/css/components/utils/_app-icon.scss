@@ -14,7 +14,9 @@
     max-height: 89px;
 
     .app-icon__name {
-      color: var(--white);
+      span {
+        color: var(--white);
+      }
     }
   }
 
