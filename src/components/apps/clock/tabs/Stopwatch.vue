@@ -97,23 +97,10 @@ function handleActionTime(name) {
       time += formatTime('hours', hours.value);
     }
 
-    if (minutes.value > 0) {
-      time += formatTime('minutes', minutes.value);
-    } else {
-      time += '00:';
-    }
-
-    if (seconds.value > 0) {
-      time += formatTime('seconds', seconds.value);
-    } else {
-      time += '00:';
-    }
-
-    if (deciseconds.value > 0) {
-      time += formatTime('deciseconds', deciseconds.value);
-    } else {
-      time += '00';
-    }
+    time +=
+      formatTime('minutes', minutes.value) +
+      formatTime('seconds', seconds.value) +
+      formatTime('deciseconds', deciseconds.value);
 
     steps.value.push(time);
     scrollToBottom();
@@ -122,15 +109,15 @@ function handleActionTime(name) {
 
 function formatTime(type, value) {
   if (type !== 'deciseconds') {
-    if (value > 0 && value < 10) {
+    if (value >= 0 && value < 10) {
       return `0${value}:`;
-    } else if (value > 10) {
+    } else if (value >= 10) {
       return `${value}:`;
     }
   } else {
-    if (value > 0 && value < 10) {
+    if (value >= 0 && value < 10) {
       return `0${value}`;
-    } else if (value > 10) {
+    } else if (value >= 10) {
       return `${value}`;
     }
   }
