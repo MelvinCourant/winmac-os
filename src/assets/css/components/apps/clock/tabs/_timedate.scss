@@ -1,0 +1,7 @@
+@use "../../../../partials/functions";
+
+.timedate {
+  &__date {
+    font-size: functions.rem(24);
+  }
+}

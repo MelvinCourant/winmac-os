@@ -7,6 +7,8 @@ defineProps({
     required: true,
   },
 });
+
+defineEmits(['tabClicked']);
 </script>
 
 <template>
@@ -16,6 +18,13 @@ defineProps({
       type="button"
       v-for="tab in tabs"
       :value="tab.title"
+      @click="
+        () => {
+          if (!tab.active) {
+            $emit('tabClicked', tab);
+          }
+        }
+      "
     />
   </div>
 </template>

@@ -1,5 +1,34 @@
+@use "../../../partials/functions";
+
 .clock {
+  display: flex;
+  flex-direction: column;
   width: 600px;
   height: 355px;
   background: var(--background-application);
+
+  &__tab {
+    flex: 1;
+
+    &-main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: functions.rem(20);
+      padding-top: functions.rem(64);
+      height: 100%;
+    }
+  }
+
+  &__time {
+    font-size: functions.rem(96);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  &__separator {
+    background: var(--color);
+    width: 200px;
+    height: 2px;
+  }
 }

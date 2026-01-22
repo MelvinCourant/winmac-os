@@ -1,3 +1,4 @@
+@use "../../../partials/functions";
 @use "../../../partials/mixins";
 
 .tabs {
@@ -14,7 +15,7 @@
     justify-content: center;
     align-items: center;
     @include mixins.resetButton(none, var(--browser-background));
-    font-size: 1rem; // 16px
+    font-size: functions.rem(16);
 
     &--active {
       background: var(--background);
