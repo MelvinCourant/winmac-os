@@ -1,0 +1,29 @@
+@use "../../../partials/mixins";
+
+.tabs {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  width: fit-content;
+  border-radius: 0 0 6px 0;
+  overflow: hidden;
+
+  .tab {
+    display: flex;
+    padding: 10px 15px;
+    justify-content: center;
+    align-items: center;
+    @include mixins.resetButton(none, var(--browser-background));
+    font-size: 1rem; // 16px
+
+    &--active {
+      background: var(--background);
+    }
+
+    &:not(.tab--active) {
+      &:hover {
+        background: var(--hover);
+      }
+    }
+  }
+}

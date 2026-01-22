@@ -31,5 +31,12 @@
     "image": "calculator",
     "component": "Calculator",
     "appbar": true
+  },
+  {
+    "name": "clock",
+    "title": "Horloge",
+    "image": "clock",
+    "component": "Clock",
+    "appbar": true
   }
 ]
