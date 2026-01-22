@@ -43,11 +43,6 @@ const themeSelectOptions = reactive([
     value: 'light',
     selected: settings.theme === 'light',
   },
-  {
-    label: 'Personnalisable',
-    value: 'custom',
-    selected: settings.theme === 'custom',
-  },
 ]);
 const wallpaperStyle = computed(() => {
   const baseStyle = {

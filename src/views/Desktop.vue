@@ -296,7 +296,7 @@ function updatePing() {
   serverRequest.send();
 }
 
-async function handleApp(app, shouldDisplay = true) {
+async function handleApp(app, shouldDisplay = true, source) {
   if (app.component === 'Browser') {
     const browserWindowIndex = windows.value.findIndex(
       (window) => window.component === 'Browser',
@@ -317,6 +317,15 @@ async function handleApp(app, shouldDisplay = true) {
         windowRef.appComponentRef.addTab(app.url, app.tabTitle, app.image);
         windows.value[browserWindowIndex].display = true;
 
+        if (
+          windowsComponentRef.value &&
+          windowsComponentRef.value.updateZIndexes
+        ) {
+          windowsComponentRef.value.updateZIndexes(
+            windows.value[browserWindowIndex],
+          );
+        }
+
         const appInAppbar = appbarApplications.find(
           (appbarApplication) => appbarApplication.name === app.name,
         );
@@ -332,8 +341,13 @@ async function handleApp(app, shouldDisplay = true) {
 
   let existingWindow = windows.value.find((window) => window.name === app.name);
 
-  if (existingWindow) {
-    existingWindow.display = !existingWindow.display;
+  if (existingWindow && source !== 'desktop') {
+    existingWindow.display = true;
+
+    if (windowsComponentRef.value && windowsComponentRef.value.updateZIndexes) {
+      windowsComponentRef.value.updateZIndexes(existingWindow);
+    }
+
     return;
   }
 
@@ -347,6 +361,10 @@ async function handleApp(app, shouldDisplay = true) {
 
   if (existingWindow && shouldDisplay) {
     existingWindow.display = true;
+  }
+
+  if (windowsComponentRef.value && windowsComponentRef.value.updateZIndexes) {
+    windowsComponentRef.value.updateZIndexes(existingWindow);
   }
 
   const appInAppbar = appbarApplications.find(
@@ -410,6 +428,14 @@ function handleWindowAction({ action, app }) {
     app.forceFullscreen = true;
   } else if (action.name === 'reduce') {
     app.forceFullscreen = false;
+  } else if (action.name === 'click') {
+    if (windowsComponentRef.value && windowsComponentRef.value.updateZIndexes) {
+      const existingWindow = windows.value.find(
+        (window) => window.name === app.name,
+      );
+
+      windowsComponentRef.value.updateZIndexes(existingWindow);
+    }
   }
 }
 
@@ -439,12 +465,18 @@ async function displaySettingsPage(settingsPage) {
   <main class="desktop">
     <h1 class="hidden-title">Winmac OS</h1>
     <Header :header="header" @click="displaySettingsPage" />
-    <DesktopApps :apps="AppsJson" @appIconClicked="handleApp($event)" />
+    <DesktopApps
+      :apps="AppsJson"
+      @appIconClicked="handleApp($event, true, 'desktop')"
+    />
     <Windows
       ref="windowsComponentRef"
       :windows="windows"
       @actionClicked="handleWindowAction($event)"
     />
-    <Appbar :apps="appbarApplications" @appIconClicked="handleApp($event)" />
+    <Appbar
+      :apps="appbarApplications"
+      @appIconClicked="handleApp($event, true, 'appbar')"
+    />
   </main>
 </template>

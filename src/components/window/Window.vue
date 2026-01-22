@@ -162,6 +162,12 @@ function stopGrabbing() {
   hasTransition.value = true;
 }
 
+function handleWindowClick(e) {
+  if (e.target.closest('.window-button')) return;
+
+  emit('actionClicked', { action: { name: 'click' }, app: props.app });
+}
+
 window.addEventListener('mousemove', moveWindow);
 window.addEventListener('mouseup', stopGrabbing);
 </script>
@@ -182,6 +188,7 @@ window.addEventListener('mouseup', stopGrabbing);
       transform: !hasTransform ? 'none' : '',
       transition: !hasTransition ? 'none' : '',
     }"
+    @mousedown="handleWindowClick"
   >
     <WindowActions
       :actions="actions"
