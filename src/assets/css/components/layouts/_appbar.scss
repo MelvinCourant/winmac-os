@@ -1,5 +1,6 @@
 .appbar {
   position: fixed;
+  z-index: 9999999999;
   left: 50%;
   bottom: 5px;
   transform: translateX(-50%);
