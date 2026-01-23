@@ -56,10 +56,10 @@ function triggerKeyboard(e) {
   if (e.key === ' ' && !timeout) {
     handleActionTime('play');
   } else if (e.key === ' ' && timeout) {
-    handleActionTime('break');
-  } else if (e.key === 'Backspace') {
+    handleActionTime('break' && timeout);
+  } else if (e.key === 'Backspace' && timeout) {
     handleActionTime('stop');
-  } else if (e.key === 'Enter') {
+  } else if (e.key === 'Enter' && timeout) {
     handleActionTime('step');
   }
 }
