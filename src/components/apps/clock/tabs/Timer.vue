@@ -76,7 +76,7 @@ function triggerKeyboard(e) {
     handleActionTime('play');
   } else if (e.key === ' ' && timeout) {
     handleActionTime('break');
-  } else if (e.key === 'Backspace' && timeout) {
+  } else if (e.key === 'Backspace') {
     handleActionTime('stop');
   } else if (e.key === 'Escape') {
     handleActionTime('reset');
