@@ -95,6 +95,9 @@ function handleActionTime(name) {
 function updateTime() {
   if (hours.value <= 0 && minutes.value <= 0 && seconds.value <= 0) {
     resetTimer();
+    notify();
+
+    return;
   }
 
   if (seconds.value === 0) {
@@ -163,6 +166,18 @@ function updateTimer() {
   }
 
   popin.display = false;
+}
+
+function notify() {
+  if (Notification.permission === 'granted') {
+    new Notification('Le temps est écoulé');
+  } else if (Notification.permission !== 'denied') {
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+        new Notification('Le temps est écoulé');
+      }
+    });
+  }
 }
 </script>
 
