@@ -11,6 +11,9 @@
 
   @media screen and (max-width: 767px) {
     width: 100vw;
+    height: 460px;
+    padding-top: 26px;
+    padding-bottom: functions.rem(44);
   }
 
   &__tab {
@@ -23,6 +26,10 @@
       gap: functions.rem(20);
       padding-top: functions.rem(64);
       flex: 1;
+
+      @media screen and (max-width: 767px) {
+        padding-top: functions.rem(24);
+      }
     }
   }
 
@@ -30,6 +37,10 @@
     font-size: functions.rem(96);
     font-weight: 700;
     line-height: 1;
+
+    @media screen and (max-width: 767px) {
+      font-size: functions.rem(70);
+    }
   }
 
   &__separator {

@@ -4,12 +4,24 @@
   display: flex;
   max-height: 100%;
 
+  @media screen and (max-width: 767px) {
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+  }
+
   &__steps {
     display: flex;
     flex-direction: column;
     max-width: 172px;
     width: 100%;
     padding: functions.rem(20);
+
+    @media screen and (max-width: 767px) {
+      max-width: initial;
+      padding: 0 functions.rem(20);
+      flex: 1;
+      overflow: hidden;
+    }
 
     &-title {
       font-size: functions.rem(20);
@@ -39,5 +51,13 @@
   &__buttons {
     display: flex;
     gap: 20px;
+  }
+
+  .clock__tab-main {
+    @media screen and (max-width: 767px) {
+      height: fit-content;
+      padding-bottom: functions.rem(24);
+      flex: initial;
+    }
   }
 }

@@ -12,6 +12,14 @@
   border-radius: 0 0 6px 0;
   overflow: hidden;
 
+  @media screen and (max-width: 767px) {
+    top: initial;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    border-radius: 6px 6px 0 0;
+  }
+
   .tab {
     display: flex;
     padding: functions.rem(10) functions.rem(15);
