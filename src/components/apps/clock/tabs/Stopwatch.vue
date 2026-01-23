@@ -1,9 +1,9 @@
 <script setup>
 import '../../../../assets/css/components/apps/clock/tabs/_stopwatch.scss';
-import { reactive, ref, nextTick } from 'vue';
+import { reactive, ref, nextTick, watch } from 'vue';
 import ClockButton from '../ClockButton.vue';
 
-defineProps({
+const props = defineProps({
   active: {
     type: Boolean,
     default: false,
@@ -52,17 +52,17 @@ const buttons = reactive([
 ]);
 let timeout;
 
-window.addEventListener('keydown', (e) => {
+function triggerKeyboard(e) {
   if (e.key === ' ' && !timeout) {
     handleActionTime('play');
   } else if (e.key === ' ' && timeout) {
     handleActionTime('break');
-  } else if (e.key === 'Escape' || e.key === 'Backspace') {
+  } else if (e.key === 'Backspace') {
     handleActionTime('stop');
   } else if (e.key === 'Enter') {
     handleActionTime('step');
   }
-});
+}
 
 function scrollToBottom() {
   nextTick(() => {
@@ -155,6 +155,17 @@ function updateTime() {
     deciseconds.value += 1;
   }
 }
+
+watch(
+  () => props.active,
+  (value) => {
+    if (value) {
+      window.addEventListener('keydown', triggerKeyboard);
+    } else {
+      window.removeEventListener('keydown', triggerKeyboard);
+    }
+  },
+);
 </script>
 
 <template>
