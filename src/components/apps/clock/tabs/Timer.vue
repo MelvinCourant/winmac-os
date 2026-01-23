@@ -63,6 +63,16 @@ const submitButtonAttributes = reactive({
 const timerRunning = ref(false);
 let timeout;
 
+window.addEventListener('keydown', (e) => {
+  if (e.key === ' ' && !timeout) {
+    handleActionTime('play');
+  } else if (e.key === ' ' && timeout) {
+    handleActionTime('break');
+  } else if (e.key === 'Escape' || e.key === 'Backspace') {
+    handleActionTime('stop');
+  }
+});
+
 function handleActionTime(name) {
   if (
     (name === 'play' && hours.value > 0) ||
