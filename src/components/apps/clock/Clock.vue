@@ -50,8 +50,8 @@ function updateTabs(tabSelected) {
 </script>
 
 <template>
+  <Tabs :tabs="tabs" @tabClicked="updateTabs" />
   <div class="clock">
-    <Tabs :tabs="tabs" @tabClicked="updateTabs" />
     <TimeDate :active="tabs[0].active" />
     <Stopwatch :active="tabs[1].active" />
     <Timer :active="tabs[2].active" />
