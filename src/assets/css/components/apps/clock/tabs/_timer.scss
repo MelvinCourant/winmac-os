@@ -1,0 +1,16 @@
+@use "../../../../partials/functions";
+@use "../../../../partials/mixins";
+
+.timer {
+  .clock__time {
+    display: flex;
+  }
+
+  &__input {
+    display: flex;
+    font-size: functions.rem(96);
+    font-weight: 700;
+    line-height: 1;
+    @include mixins.resetButton(none, transparent);
+  }
+}

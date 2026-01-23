@@ -6,6 +6,11 @@
   width: 600px;
   height: 355px;
   background: var(--background-application);
+  backdrop-filter: var(--glass);
+
+  @media screen and (max-width: 767px) {
+    width: 100vw;
+  }
 
   &__tab {
     flex: 1;

@@ -12,7 +12,7 @@
 
   .tab {
     display: flex;
-    padding: 10px 15px;
+    padding: functions.rem(10) functions.rem(15);
     justify-content: center;
     align-items: center;
     @include mixins.resetButton(none, var(--browser-background));
