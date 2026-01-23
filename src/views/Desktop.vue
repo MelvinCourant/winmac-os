@@ -219,13 +219,15 @@ watch(
 );
 
 setInterval(updateDateTime, 1000);
-navigator.getBattery().then((battery) => {
-  updateBatteryIcon(battery);
-
-  battery.addEventListener('levelchange', () => {
+if (navigator.getBattery) {
+  navigator.getBattery().then((battery) => {
     updateBatteryIcon(battery);
+
+    battery.addEventListener('levelchange', () => {
+      updateBatteryIcon(battery);
+    });
   });
-});
+}
 updatePing();
 pingIntervalId.value = setInterval(updatePing, pingRefreshTime.value);
 
