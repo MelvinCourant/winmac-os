@@ -8,8 +8,13 @@
   gap: 10px;
   max-width: 380px;
   width: 100%;
+  height: auto;
   aspect-ratio: 1/1;
   margin-top: functions.rem(10);
+
+  @media screen and (max-width: 767px) {
+    max-width: 335px;
+  }
 
   &__box {
     @include mixins.resetButton(none, var(--background));
@@ -19,6 +24,10 @@
     font-size: functions.rem(96);
     font-weight: 600;
     text-transform: uppercase;
+
+    @media screen and (max-width: 767px) {
+      font-size: functions.rem(80);
+    }
 
     &:not(:disabled):hover {
       background: var(--hover);

@@ -9,6 +9,11 @@
   backdrop-filter: var(--glass);
   padding: functions.rem(36) functions.rem(20) functions.rem(20);
 
+  @media screen and (max-width: 767px) {
+    width: 100vw;
+    height: 494px;
+  }
+
   &__players {
     flex: 1;
     display: flex;
