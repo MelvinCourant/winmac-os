@@ -28,6 +28,23 @@
     width: 100%;
   }
 
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: functions.rem(8);
+    width: 100%;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+
+      p {
+        font-size: functions.rem(16);
+        line-height: 1;
+      }
+    }
+  }
+
   &__backdrop {
     position: absolute;
     z-index: 5;

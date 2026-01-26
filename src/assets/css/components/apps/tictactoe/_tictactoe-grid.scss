@@ -1,0 +1,35 @@
+@use "../../../partials/functions";
+@use "../../../partials/mixins";
+
+.tictactoe-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 10px;
+  max-width: 380px;
+  width: 100%;
+  aspect-ratio: 1/1;
+  margin-top: functions.rem(10);
+
+  &__box {
+    @include mixins.resetButton(none, var(--background));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: functions.rem(96);
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &:not(:disabled):hover {
+      background: var(--hover);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    &--highlighted {
+      color: var(--green);
+    }
+  }
+}

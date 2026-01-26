@@ -21,7 +21,8 @@
   &__wrapper,
   &--button,
   &--submit,
-  &--password {
+  &--password,
+  &--text {
     position: relative;
     @include mixins.resetButton(none, var(--input));
     display: flex;
@@ -32,6 +33,11 @@
     border-radius: 6px;
     font-size: functions.rem(14);
     font-weight: 400;
+  }
+
+  &--password,
+  &--text {
+    border-radius: 3px;
   }
 
   label {

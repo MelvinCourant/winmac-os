@@ -38,5 +38,12 @@
     "image": "clock",
     "component": "Clock",
     "appbar": true
+  },
+  {
+    "name": "tictactoe",
+    "title": "Morpion",
+    "image": "tictactoe",
+    "component": "TicTacToe",
+    "appbar": true
   }
 ]

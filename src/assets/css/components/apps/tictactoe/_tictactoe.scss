@@ -1,0 +1,56 @@
+@use "../../../partials/functions";
+@use "../../../partials/mixins";
+
+.tictactoe {
+  display: flex;
+  width: 420px;
+  height: 544px;
+  background: var(--background-application);
+  backdrop-filter: var(--glass);
+  padding: functions.rem(36) functions.rem(20) functions.rem(20);
+
+  &__players {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: functions.rem(16);
+  }
+
+  &__player-button {
+    @include mixins.resetButton(none, transparent);
+    font-size: functions.rem(30);
+    padding: functions.rem(20);
+
+    &:hover {
+      background: var(--hover);
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    .input {
+      margin-top: functions.rem(20);
+      justify-content: center;
+
+      &--button {
+        background: var(--background);
+
+        &:hover {
+          background: var(--hover);
+        }
+      }
+    }
+  }
+
+  .popin {
+    .input:has(.input--text),
+    .input--text {
+      width: 100%;
+    }
+  }
+}
