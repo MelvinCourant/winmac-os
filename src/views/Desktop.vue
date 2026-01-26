@@ -199,8 +199,11 @@ provide('onTabClosed', (url) => {
   const appInAppbar = appbarApplications.find(
     (appbarApplication) => appbarApplication.url === url,
   );
-  if (appInAppbar) {
+  if (appInAppbar && appInAppbar.appbar) {
     appInAppbar.opened = false;
+  } else if (appInAppbar && !appInAppbar.appbar) {
+    const index = appbarApplications.indexOf(appInAppbar);
+    appbarApplications.splice(index, 1);
   }
 });
 
@@ -334,6 +337,11 @@ async function handleApp(app, shouldDisplay = true, source) {
 
         if (appInAppbar) {
           appInAppbar.opened = true;
+        } else {
+          appbarApplications.push({
+            ...app,
+            opened: true,
+          });
         }
 
         return;
@@ -375,6 +383,11 @@ async function handleApp(app, shouldDisplay = true, source) {
 
   if (appInAppbar) {
     appInAppbar.opened = true;
+  } else {
+    appbarApplications.push({
+      ...app,
+      opened: true,
+    });
   }
 }
 
@@ -403,8 +416,11 @@ function handleWindowAction({ action, app }) {
             const appInAppbar = appbarApplications.find(
               (appbarApplication) => appbarApplication.url === tab.url,
             );
-            if (appInAppbar) {
+            if (appInAppbar && appInAppbar.appbar) {
               appInAppbar.opened = false;
+            } else if (appInAppbar && !appInAppbar.appbar) {
+              const index = appbarApplications.indexOf(appInAppbar);
+              appbarApplications.splice(index, 1);
             }
           });
         }
@@ -421,8 +437,11 @@ function handleWindowAction({ action, app }) {
       (appbarApplication) => appbarApplication.name === app.name,
     );
 
-    if (appInAppbar) {
+    if (appInAppbar && appInAppbar.appbar) {
       appInAppbar.opened = false;
+    } else if (appInAppbar && !appInAppbar.appbar) {
+      const index = appbarApplications.indexOf(appInAppbar);
+      appbarApplications.splice(index, 1);
     }
   } else if (action.name === 'minimize') {
     app.display = false;
