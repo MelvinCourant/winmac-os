@@ -382,7 +382,7 @@ async function handleApp(app, shouldDisplay = true, source) {
     (appbarApplication) => appbarApplication.name === app.name,
   );
 
-  if (window.innerWidth < 768) {
+  if (window.innerWidth < 992) {
     existingWindow.forceFullscreen = true;
     windowForceFullscreenMobile.value.push(existingWindow);
   }
@@ -490,7 +490,7 @@ async function displaySettingsPage(settingsPage) {
 window.addEventListener('resize', toggleFullscreenMobile);
 
 function toggleFullscreenMobile() {
-  if (window.innerWidth < 768) {
+  if (window.innerWidth < 992) {
     windows.value.forEach((window) => {
       if (!window.forceFullscreen) {
         window.forceFullscreen = true;

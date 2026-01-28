@@ -33,7 +33,7 @@ const AppComponent = defineAsyncComponent(() => {
 
 const windowWidth = ref(window.innerWidth);
 const isMobile = computed(() => {
-  return windowWidth.value < 768;
+  return windowWidth.value < 992;
 });
 const actions = computed(() => [
   {

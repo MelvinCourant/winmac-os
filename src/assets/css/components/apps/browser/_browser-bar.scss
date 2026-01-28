@@ -11,6 +11,10 @@
   &__tabs {
     display: flex;
     padding-left: 40px;
+
+    @media screen and (max-width: 767px) {
+      padding-left: 10px;
+    }
   }
 
   &__tab {
@@ -23,6 +27,10 @@
     gap: 10px;
     background: var(--background);
     border-radius: 10px 10px 0 0;
+
+    @media screen and (max-width: 767px) {
+      max-width: 38%;
+    }
 
     &--active {
       z-index: 7;
@@ -106,6 +114,10 @@
     display: flex;
     height: fit-content;
     gap: 2px;
+
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
   }
 
   &__button {
