@@ -7,6 +7,10 @@
   justify-content: center;
   align-items: center;
 
+  @media screen and (max-width: 767px) {
+    padding: 4px 9px;
+  }
+
   &--normal {
     &:hover {
       background: var(--hover);
@@ -16,6 +20,12 @@
   &--danger {
     &:hover {
       background: var(--red);
+    }
+  }
+
+  svg {
+    @media screen and (max-width: 767px) {
+      width: 24px;
     }
   }
 }

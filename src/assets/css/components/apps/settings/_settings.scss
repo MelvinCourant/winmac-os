@@ -11,6 +11,10 @@
   align-items: center;
   gap: functions.rem(60);
 
+  @media screen and (max-width: 767px) {
+    gap: functions.rem(40);
+  }
+
   &:before {
     content: "";
     position: absolute;
@@ -36,6 +40,10 @@
     font-weight: 700;
     font-style: normal;
     text-align: center;
+
+    @media screen and (max-width: 767px) {
+      font-size: functions.rem(30);
+    }
   }
 
   &__list {
@@ -44,6 +52,11 @@
     gap: functions.rem(40);
     overflow-y: auto;
     padding: 0 functions.rem(60);
+
+    @media screen and (max-width: 767px) {
+      padding: 0 functions.rem(10);
+      gap: functions.rem(20);
+    }
   }
 
   &-item {
@@ -54,6 +67,10 @@
     padding: functions.rem(10);
     border-radius: 6px;
     background: var(--background);
+
+    @media screen and (max-width: 767px) {
+      width: 100%;
+    }
 
     &:hover {
       background: var(--hover);

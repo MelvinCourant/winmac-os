@@ -10,6 +10,8 @@
   }
 
   &__field {
+    display: flex;
+    height: fit-content;
     position: relative;
 
     &:before {

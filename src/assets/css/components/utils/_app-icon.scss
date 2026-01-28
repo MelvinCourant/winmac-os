@@ -23,9 +23,11 @@
   &--appbar {
     padding-bottom: 10px;
 
-    &:hover {
-      .app-icon__name {
-        display: flex;
+    @media screen and (min-width: 768px){
+      &:hover {
+        .app-icon__name {
+          display: flex;
+        }
       }
     }
 
@@ -42,39 +44,50 @@
       background: var(--color);
     }
 
-    .app-icon__name {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translate(-50%, calc(-100% - 16px));
-      display: none;
-      align-items: center;
-      flex-direction: column;
-      color: var(--color);
-      text-wrap: nowrap;
-      filter:
-        drop-shadow(0 -1px 0 var(--color))
-        drop-shadow(0 1px 0 var(--color));
+    .app-icon {
+      &__name {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, calc(-100% - 16px));
+        display: none;
+        align-items: center;
+        flex-direction: column;
+        color: var(--color);
+        text-wrap: nowrap;
+        filter:
+                drop-shadow(0 -1px 0 var(--color))
+                drop-shadow(0 1px 0 var(--color));
 
-      &:after {
-        content: '';
-        width: 0;
-        height: 0;
-        border-left: 7.5px solid transparent;
-        border-right: 7.5px solid transparent;
-        border-top: 8px solid var(--background);
+        &:after {
+          content: '';
+          width: 0;
+          height: 0;
+          border-left: 7.5px solid transparent;
+          border-right: 7.5px solid transparent;
+          border-top: 8px solid var(--background);
+        }
+
+        span {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: functions.rem(6) functions.rem(12);
+          background: var(--background);
+          border-radius: 6px;
+          filter:
+                  drop-shadow(-1px 0 0 var(--color))
+                  drop-shadow(1px 0 0 var(--color));
+        }
       }
 
-      span {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: functions.rem(6) functions.rem(12);
-        background: var(--background);
-        border-radius: 6px;
-        filter:
-          drop-shadow(-1px 0 0 var(--color))
-          drop-shadow(1px 0 0 var(--color));
+      &__image {
+        @media screen and (max-width: 767px) {
+          min-width: 40px;
+          max-width: 40px;
+          min-height: 40px;
+          max-height: 40px;
+        }
       }
     }
   }
@@ -86,8 +99,10 @@
   }
 
   &__image {
-    width: 50px;
-    height: 50px;
+    min-width: 50px;
+    max-width: 50px;
+    min-height: 50px;
+    max-height: 50px;
   }
 
   &__name {
