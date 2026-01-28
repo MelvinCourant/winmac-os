@@ -12,7 +12,7 @@ defineEmits(['actionClicked']);
 
 const windowRefs = ref([]);
 const zIndexes = ref([]);
-const currentMaxZindex = ref(0);
+const currentMaxZindex = ref(1);
 
 function setWindowRef(el, index, windowName) {
   if (el) {

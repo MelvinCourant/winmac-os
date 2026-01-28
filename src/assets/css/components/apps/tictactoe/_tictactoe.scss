@@ -10,8 +10,7 @@
   padding: functions.rem(36) functions.rem(20) functions.rem(20);
 
   @media screen and (max-width: 767px) {
-    width: 100vw;
-    height: 494px;
+    padding: functions.rem(36) functions.rem(20) functions.rem(20);
   }
 
   &__players {
