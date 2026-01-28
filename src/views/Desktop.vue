@@ -12,6 +12,7 @@ const settingsStore = useSettingsStore();
 const { settings } = settingsStore;
 const windows = ref([]);
 const windowsComponentRef = ref(null);
+const windowForceFullscreenMobile = ref([]);
 const currentDay = ref(new Date().getDate());
 const currentMonth = ref(new Date().getMonth() + 1);
 const currentYear = ref(new Date().getFullYear());
@@ -381,6 +382,11 @@ async function handleApp(app, shouldDisplay = true, source) {
     (appbarApplication) => appbarApplication.name === app.name,
   );
 
+  if (window.innerWidth < 768) {
+    existingWindow.forceFullscreen = true;
+    windowForceFullscreenMobile.value.push(existingWindow);
+  }
+
   if (appInAppbar) {
     appInAppbar.opened = true;
   } else {
@@ -479,6 +485,24 @@ async function displaySettingsPage(settingsPage) {
   await nextTick();
   // Reset settings watch
   settingsPageToDisplayed.value = null;
+}
+
+window.addEventListener('resize', toggleFullscreenMobile);
+
+function toggleFullscreenMobile() {
+  if (window.innerWidth < 768) {
+    windows.value.forEach((window) => {
+      if (!window.forceFullscreen) {
+        window.forceFullscreen = true;
+        windowForceFullscreenMobile.value.push(window);
+      }
+    });
+  } else {
+    windowForceFullscreenMobile.value.forEach((window, index) => {
+      window.forceFullscreen = false;
+      windowForceFullscreenMobile.value.splice(index, 1);
+    });
+  }
 }
 </script>
 
