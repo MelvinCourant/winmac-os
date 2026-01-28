@@ -20,7 +20,7 @@ $dark-theme-colors: (
   'color': #D9DBDE,
   'background': #202225,
   'background-appbar': rgba(43, 45, 49, 0.7),
-  'background-application': rgba(32, 34, 37, 0.8),
+  'background-application': rgba(32, 34, 37, 0.6),
   'background-transparent': rgba(32, 34, 37, 0),
   'browser-background': #3B3F44,
   'browser-transparent': rgba(47, 50, 55, 0),
@@ -33,13 +33,13 @@ $light-theme-colors: (
   'color': #202225,
   'background': #D9DBDE,
   'background-appbar': rgba(228, 229, 231, 0.7),
-  'background-application': rgba(217, 219, 222, 0.8),
+  'background-application': rgba(217, 219, 222, 0.6),
   'background-transparent': rgba(217, 219, 222, 0),
   'browser-background': #BBBEC4,
   'browser-transparent': rgba(200, 203, 208, 0),
   'hover': #C0C4C9,
   'input': #C3C6CB,
-  'input-hover': #878D97,
+  'input-hover': #ADB1B8,
 );
 
 :root {
