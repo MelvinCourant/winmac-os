@@ -42,7 +42,7 @@ const pinButtons = [
 const code = ref('');
 
 function vibrate() {
-  if (settings.vibration.active) {
+  if (settings.vibration.active && window.navigator.vibrate) {
     window.navigator.vibrate(200);
   }
 }
@@ -84,7 +84,10 @@ onUnmounted(() => {
 
 <template>
   <div
-    :class="[`pin-code pin-code--${size}`, { 'pin-code--vibrate': vibrate }]"
+    :class="[
+      `pin-code pin-code--${size}`,
+      { 'pin-code--vibrate': props.vibrate },
+    ]"
   >
     <ul class="pin-code__dots">
       <li
